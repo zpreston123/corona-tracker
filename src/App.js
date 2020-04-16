@@ -21,6 +21,8 @@ class App extends React.Component {
 	handleCountryChange = async (country) => {
 		const fetchedData = await fetchData(country);
 
+		window.scrollTo(0, 0);
+
 		this.setState({ data: fetchedData, country: country });
 	}
 
