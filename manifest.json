@@ -1,6 +1,6 @@
 {
-  "short_name": "Corona Tracker",
-  "name": "Corona Tracker Application",
+  "short_name": "COVID-19 Tracker",
+  "name": "COVID-19 Tracker Application",
   "icons": [
     {
       "src": "favicon.ico",
