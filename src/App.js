@@ -3,8 +3,11 @@ import React from 'react';
 import { Cards, GlobalChart, USChart, CountryPicker, StatePicker } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchStateData } from './api';
+import { defaults } from 'react-chartjs-2';
 
 import image from './images/image.png';
+
+defaults.global.maintainAspectRatio = false;
 
 class App extends React.Component {
 	state = {
