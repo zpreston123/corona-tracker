@@ -18,7 +18,7 @@ export const fetchInitialStateData = async () => {
 		let currentDate = new Date();
 		let yesterday = currentDate.setDate(currentDate.getDate() - 1);
 
-		for (let date = new Date('1-22-2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
+		for (let date = new Date('1/22/2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
 			let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
 			let { data } = await axios.get(`${url}/daily/${reportDate}`);
 			let confirmedTotal = data
@@ -62,7 +62,7 @@ export const fetchStateData = async (state) => {
 		let yesterday = currentDate.setDate(currentDate.getDate() - 1);
 
 		if (state) {
-			for (let date = new Date('1-22-2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
+			for (let date = new Date('1/22/2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
 				let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
 				let { data } = await axios.get(`${url}/daily/${reportDate}`);
 				let confirmedTotal = data
