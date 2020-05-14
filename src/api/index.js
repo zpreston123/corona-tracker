@@ -2,7 +2,17 @@ import axios from 'axios';
 
 const url = 'https://covid19.mathdro.id/api';
 
-export const fetchData = async (country) => {
+export const fetchInitialCountryData = async () => {
+	try {
+		const { data } = await axios.get(`${url}/daily`);
+
+		return data.map(({ confirmed, deaths, reportDate: date }) => ({ confirmed: confirmed.total, deaths: deaths.total, date }));
+	} catch (error) {
+		return error;
+	}
+}
+
+export const fetchCountryData = async (country) => {
 	let changeableUrl = url;
 
 	if (country) {
@@ -18,11 +28,45 @@ export const fetchData = async (country) => {
 	}
 }
 
-export const fetchDailyData = async () => {
+export const fetchStateData = async (state) => {
 	try {
-		const { data } = await axios.get(`${url}/daily`);
+		let stateData = [];
+		let currentDate = new Date();
+		let yesterday = currentDate.setDate(currentDate.getDate() - 1);
 
-		return data.map(({ confirmed, deaths, reportDate: date }) => ({ confirmed: confirmed.total, deaths: deaths.total, date }));
+		if (state) {
+			for (let date = new Date('1-22-2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
+				let reportDate = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+				let { data } = await axios.get(`${url}/daily/${reportDate}`);
+				let confirmedTotal = data
+					.filter((item) => item.provinceState === state && item.confirmed !== '')
+					.map((item) => parseInt(item.confirmed))
+					.reduce((total, current) => total + current, 0);
+				let deathTotal = data
+					.filter((item) => item.provinceState === state && item.deaths !== '')
+					.map((item) => parseInt(item.deaths))
+					.reduce((total, current) => total + current, 0);
+
+				stateData.push({ confirmed: confirmedTotal, deaths: deathTotal, date: reportDate });
+			}
+		} else {
+			for (let date = new Date('1-22-2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
+				let reportDate = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+				let { data } = await axios.get(`${url}/daily/${reportDate}`);
+				let confirmedTotal = data
+					.filter((item) => item.countryRegion === 'US' && item.confirmed !== '')
+					.map((item) => parseInt(item.confirmed))
+					.reduce((total, current) => total + current, 0);
+				let deathTotal = data
+					.filter((item) => item.countryRegion === 'US' && item.deaths !== '')
+					.map((item) => parseInt(item.deaths))
+					.reduce((total, current) => total + current, 0);
+
+				stateData.push({ confirmed: confirmedTotal, deaths: deathTotal, date: reportDate });
+			}
+		}
+
+		return stateData;
 	} catch (error) {
 		return error;
 	}
@@ -35,5 +79,22 @@ export const fetchCountries = async () => {
 		return countries.map((country) => country.name);
 	} catch (error) {
 		return error;
+	}
+}
+
+export const fetchStates = async () => {
+	try {
+		const usaConfirmed = await axios.get(`${url}/countries/USA/confirmed`);
+		const usaDeaths = await axios.get(`${url}/countries/USA/deaths`);
+		const usaConfirmedStates = usaConfirmed.data
+			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/))
+			.map((item) => item.provinceState);
+		const usaDeathStates = usaDeaths.data
+			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/))
+			.map((item) => item.provinceState);
+
+		return [...new Set([...usaConfirmedStates, ...usaDeathStates])].sort();
+	} catch (error) {
+		console.log(error);
 	}
 }
