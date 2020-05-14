@@ -15,6 +15,10 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 		fetchAPI();
 	}, []);
 
+	if (!initialCountryData.length) {
+		return 'Loading...';
+	}
+
 	const lineChart = (
 		initialCountryData.length
 			? (
