@@ -36,7 +36,7 @@ export const fetchStateData = async (state) => {
 
 		if (state) {
 			for (let date = new Date('1-22-2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
-				let reportDate = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+				let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
 				let { data } = await axios.get(`${url}/daily/${reportDate}`);
 				let confirmedTotal = data
 					.filter((item) => item.provinceState === state && item.confirmed !== '')
@@ -51,7 +51,7 @@ export const fetchStateData = async (state) => {
 			}
 		} else {
 			for (let date = new Date('1-22-2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
-				let reportDate = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+				let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
 				let { data } = await axios.get(`${url}/daily/${reportDate}`);
 				let confirmedTotal = data
 					.filter((item) => item.countryRegion === 'US' && item.confirmed !== '')
