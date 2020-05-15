@@ -12,33 +12,6 @@ export const fetchInitialCountryData = async () => {
 	}
 }
 
-export const fetchInitialStateData = async () => {
-	try {
-		let stateData = [];
-		let currentDate = new Date();
-		let yesterday = currentDate.setDate(currentDate.getDate() - 1);
-
-		for (let date = new Date('1/22/2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
-			let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
-			let { data } = await axios.get(`${url}/daily/${reportDate}`);
-			let confirmedTotal = data
-				.filter((item) => item.countryRegion === 'US' && item.confirmed !== '')
-				.map((item) => parseInt(item.confirmed))
-				.reduce((total, current) => total + current, 0);
-			let deathTotal = data
-				.filter((item) => item.countryRegion === 'US' && item.deaths !== '')
-				.map((item) => parseInt(item.deaths))
-				.reduce((total, current) => total + current, 0);
-
-			stateData.push({ confirmed: confirmedTotal, deaths: deathTotal, date: reportDate });
-		}
-
-		return stateData;
-	} catch (error) {
-		return error;
-	}
-}
-
 export const fetchCountryData = async (country) => {
 	let changeableUrl = url;
 
@@ -61,21 +34,25 @@ export const fetchStateData = async (state) => {
 		let currentDate = new Date();
 		let yesterday = currentDate.setDate(currentDate.getDate() - 1);
 
-		if (state) {
-			for (let date = new Date('1/22/2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
-				let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
-				let { data } = await axios.get(`${url}/daily/${reportDate}`);
-				let confirmedTotal = data
-					.filter((item) => item.provinceState === state && item.confirmed !== '')
-					.map((item) => parseInt(item.confirmed))
-					.reduce((total, current) => total + current, 0);
-				let deathTotal = data
-					.filter((item) => item.provinceState === state && item.deaths !== '')
-					.map((item) => parseInt(item.deaths))
-					.reduce((total, current) => total + current, 0);
+		for (let date = new Date('1/22/2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
+			let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
+			let { data } = await axios.get(`${url}/daily/${reportDate}`);
+			let confirmedTotal = data
+				.filter((item) => {
+					let firstCondition = (state) ? item.provinceState === state : item.countryRegion === 'US';
+					return firstCondition && item.confirmed !== '';
+				})
+				.map((item) => parseInt(item.confirmed))
+				.reduce((total, current) => total + current, 0);
+			let deathTotal = data
+				.filter((item) => {
+					let firstCondition = (state) ? item.provinceState === state : item.countryRegion === 'US';
+					return firstCondition && item.deaths !== '';
+				})
+				.map((item) => parseInt(item.deaths))
+				.reduce((total, current) => total + current, 0);
 
-				stateData.push({ confirmed: confirmedTotal, deaths: deathTotal, date: reportDate });
-			}
+			stateData.push({ confirmed: confirmedTotal, deaths: deathTotal, date: reportDate });
 		}
 
 		return stateData;

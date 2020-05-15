@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchInitialCountryData } from '../../../api';
 import { Line, Bar } from 'react-chartjs-2';
-
 import styles from './GlobalChart.module.css';
 
 const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
@@ -14,10 +13,6 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 
 		fetchAPI();
 	}, []);
-
-	if (!initialCountryData.length) {
-		return 'Loading...';
-	}
 
 	const lineChart = (
 		initialCountryData.length
