@@ -3,7 +3,10 @@ import { Cards, GlobalChart, USChart, CountryPicker, StatePicker } from './compo
 import styles from './App.module.css';
 import { fetchCountryData, fetchStateData } from './api';
 import { defaults } from 'react-chartjs-2';
-import { CircularProgress } from '@material-ui/core';
+import {
+	CircularProgress, Switch, ThemeProvider, createMuiTheme,
+	CssBaseline, FormControl, FormGroup, FormControlLabel, Grid
+} from '@material-ui/core';
 import image from './images/image.png';
 
 defaults.global.maintainAspectRatio = false;
@@ -15,6 +18,12 @@ const App = () => {
 	const [state, setState] = useState();
 	const [countryDataLoaded, setCountryDataLoaded] = useState(false);
 	const [stateDataLoaded, setStateDataLoaded] = useState(false);
+	const [darkMode, setDarkMode] = useState(false);
+	const theme = createMuiTheme({
+		palette: {
+			type: darkMode ? 'dark' : 'light'
+		}
+	});
 
 	useEffect(() => {
 		async function loadData() {
@@ -52,16 +61,35 @@ const App = () => {
 	}
 
 	return (
-		<div className={styles.container}>
-			<img className={styles.image} src={image} alt="COVID-19"/>
-			<h1>{!country ? 'Global' : country}</h1>
-			<Cards data={countryData}/>
-			<CountryPicker handleCountryChange={handleCountryChange}/>
-			{countryDataLoaded ? <GlobalChart data={countryData} country={country}/> : <CircularProgress/>}
-			<h1>{!state ? 'US States / Territories' : state}</h1>
-			<StatePicker handleStateChange={handleStateChange}/>
-			{stateDataLoaded ? <USChart data={stateData} state={state}/> : <CircularProgress/>}
-		</div>
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<div className={styles.container}>
+				<Grid container alignItems="flex-start" justify="flex-end" direction="row">
+					<FormControl component="fieldset">
+						<FormGroup>
+							<FormControlLabel
+								control={<Switch onChange={() => setDarkMode(!darkMode)}/>}
+								label="Dark"
+								labelPlacement="start"
+							/>
+						</FormGroup>
+					</FormControl>
+				</Grid>
+				<img className={styles.image} src={image} alt="COVID-19"/>
+				<h1>{!country ? 'Global' : country}</h1>
+				<Cards data={countryData}/>
+				<CountryPicker handleCountryChange={handleCountryChange}/>
+				{countryDataLoaded ? <GlobalChart data={countryData} country={country}/> : <CircularProgress/>}
+				<h1>{!state ? 'US States / Territories' : state}</h1>
+				<StatePicker handleStateChange={handleStateChange}/>
+				{stateDataLoaded ? <USChart data={stateData} state={state}/> : <CircularProgress/>}
+				<p className={styles.footer}>
+					Data sourced from John Hopkins University<br/>
+					CSSE via JSON API<br/><br/>
+					coronavirus.jhu.edu/map.html
+				</p>
+			</div>
+		</ThemeProvider>
 	);
 }
 
