@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Cards, GlobalChart, USChart, CountryPicker, StatePicker } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchStateData } from './api';
@@ -8,60 +8,61 @@ import image from './images/image.png';
 
 defaults.global.maintainAspectRatio = false;
 
-class App extends React.Component {
-	state = {
-		countryData: {},
-		stateData: {},
-		country: '',
-		state: '',
-		countryDataLoaded: false,
-		stateDataLoaded: false
-	}
+const App = () => {
+	const [countryData, setCountryData] = useState({});
+	const [stateData, setStateData] = useState({});
+	const [country, setCountry] = useState();
+	const [state, setState] = useState();
+	const [countryDataLoaded, setCountryDataLoaded] = useState(false);
+	const [stateDataLoaded, setStateDataLoaded] = useState(false);
 
-	async componentDidMount() {
-		const fetchedCountryData = await fetchCountryData();
+	useEffect(() => {
+		async function loadData() {
+			const countryData = await fetchCountryData();
+			setCountryDataLoaded(true);
+			setCountryData(countryData);
 
-		this.setState({ countryData: fetchedCountryData, countryDataLoaded: true });
+			const stateData = await fetchStateData();
+			setStateDataLoaded(true);
+			setStateData(stateData);
+		}
+		loadData();
+	}, []);
 
-		const fetchedStateData = await fetchStateData();
+	const handleCountryChange = async (country) => {
+		setCountryDataLoaded(false);
 
-		this.setState({ stateData: fetchedStateData, stateDataLoaded: true });
-	}
-
-	handleCountryChange = async (country) => {
-		this.setState({ countryDataLoaded: false });
-
-		const fetchedCountryData = await fetchCountryData(country);
+		const countryData = await fetchCountryData(country);
 
 		window.scrollTo(0, 0);
 
-		this.setState({ countryData: fetchedCountryData, country: country, countryDataLoaded: true });
+		setCountryDataLoaded(true);
+		setCountryData(countryData);
+		setCountry(country);
 	}
 
-	handleStateChange = async (state) => {
-		this.setState({ stateDataLoaded: false });
+	const handleStateChange = async (state) => {
+		setStateDataLoaded(false);
 
-		const fetchedStateData = await fetchStateData(state);
+		const stateData = await fetchStateData(state);
 
-		this.setState({ stateData: fetchedStateData, state: state, stateDataLoaded: true });
+		setStateDataLoaded(true);
+		setStateData(stateData);
+		setState(state);
 	}
 
-	render() {
-		const { countryData, stateData, country, state, countryDataLoaded, stateDataLoaded } = this.state;
-
-		return (
-			<div className={styles.container}>
-				<img className={styles.image} src={image} alt="COVID-19"/>
-				<h1>{!country ? 'Global' : country}</h1>
-				<Cards data={countryData}/>
-				<CountryPicker handleCountryChange={this.handleCountryChange}/>
-				{countryDataLoaded ? <GlobalChart data={countryData} country={country}/> : <CircularProgress/>}
-				<h1>{!state ? 'US States / Territories' : state}</h1>
-				<StatePicker handleStateChange={this.handleStateChange}/>
-				{stateDataLoaded ? <USChart data={stateData} state={state}/> : <CircularProgress/>}
-			</div>
-		)
-	}
+	return (
+		<div className={styles.container}>
+			<img className={styles.image} src={image} alt="COVID-19"/>
+			<h1>{!country ? 'Global' : country}</h1>
+			<Cards data={countryData}/>
+			<CountryPicker handleCountryChange={handleCountryChange}/>
+			{countryDataLoaded ? <GlobalChart data={countryData} country={country}/> : <CircularProgress/>}
+			<h1>{!state ? 'US States / Territories' : state}</h1>
+			<StatePicker handleStateChange={handleStateChange}/>
+			{stateDataLoaded ? <USChart data={stateData} state={state}/> : <CircularProgress/>}
+		</div>
+	);
 }
 
 export default App;
