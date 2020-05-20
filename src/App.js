@@ -4,7 +4,7 @@ import styles from './App.module.css';
 import { fetchCountryData, fetchStateData } from './api';
 import { defaults } from 'react-chartjs-2';
 import {
-	CircularProgress, Switch, ThemeProvider, createMuiTheme,
+	CircularProgress, Switch, ThemeProvider, createMuiTheme, Divider,
 	CssBaseline, FormControl, FormGroup, FormControlLabel, Grid
 } from '@material-ui/core';
 import image from './images/image.png';
@@ -62,7 +62,7 @@ const App = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<CssBaseline />
+			<CssBaseline/>
 			<div className={styles.container}>
 				<Grid container alignItems="flex-start" justify="flex-end" direction="row">
 					<FormControl component="fieldset">
@@ -80,6 +80,7 @@ const App = () => {
 				<Cards data={countryData}/>
 				<CountryPicker handleCountryChange={handleCountryChange}/>
 				{countryDataLoaded ? <GlobalChart data={countryData} country={country}/> : <CircularProgress/>}
+				<Divider className={styles.divider}/>
 				<h1>{!state ? 'US States / Territories' : state}</h1>
 				<StatePicker handleStateChange={handleStateChange}/>
 				{stateDataLoaded ? <USChart data={stateData} state={state}/> : <CircularProgress/>}

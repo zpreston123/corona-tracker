@@ -6,7 +6,7 @@ body {
 h1 {
 	margin-top: 0;
 	margin-bottom: 0;
-	padding-top: 8%;
+	padding-top: 5%;
 }
 
 .container {
@@ -21,17 +21,29 @@ h1 {
 	margin-top: 45px;
 }
 
+.divider {
+	width: 90%;
+}
+
 .footer {
 	color: gray;
 	text-align: center;
 }
 
 @media (max-width: 770px) {
+	h1 {
+		padding-top: 8%;
+	}
+
 	.container {
 		margin: 0 10%;
 	}
 
 	.image {
+		width: 100%;
+	}
+
+	.divider {
 		width: 100%;
 	}
 }
