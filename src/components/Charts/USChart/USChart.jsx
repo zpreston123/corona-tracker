@@ -13,12 +13,13 @@ const USChart = ({ data: stateData, state }) => {
 							data: stateData.map(({ confirmed }) => confirmed),
 							label: 'Infected',
 							borderColor: '#3333ff',
+							backgroundColor: 'rgba(0, 0, 255, 0.1)',
 							fill: true
 						}, {
 							data: stateData.map(({ deaths }) => deaths),
 							label: 'Deaths',
 							borderColor: 'red',
-							backgroundColor: 'rgba(255, 0, 0, 0.5)',
+							backgroundColor: 'rgba(255, 0, 0, 0.3)',
 							fill: true
 						}]
 					}}
