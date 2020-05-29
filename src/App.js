@@ -104,7 +104,7 @@ const App = () => {
 				<StatePicker handleStateChange={handleStateChange}/>
 				{!stateDataLoaded || !state ? null : <CountyPicker state={state} handleCountyChange={handleCountyChange}/>}
 				{!stateDataLoaded ? <CircularProgress/> : <StateChart data={stateData} state={state}/>}
-				{!countyDataLoaded || !stateDataLoaded ? null : <CountyChart data={countyData} county={county}/>}
+				{!countyDataLoaded || !stateDataLoaded || !county ? null : <CountyChart data={countyData} county={county}/>}
 				<p className={styles.footer}>
 					Data sourced from John Hopkins University<br/>
 					CSSE via JSON API<br/><br/>

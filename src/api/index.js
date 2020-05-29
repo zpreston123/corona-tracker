@@ -76,7 +76,7 @@ export const fetchCountyData = async (county, state) => {
 			return { confirmed: confirmedTotal, deaths: deathTotal };
 		}
 
-		return null;
+		return { confirmed: null, deaths: null };
 	} catch (error) {
 		return error;
 	}
