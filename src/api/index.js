@@ -61,6 +61,27 @@ export const fetchStateData = async (state) => {
 	}
 }
 
+export const fetchCountyData = async (county, state) => {
+	try {
+		if (county !== '') {
+			let confirmed = await axios.get(`${url}/countries/USA/confirmed`);
+			let deaths = await axios.get(`${url}/countries/USA/deaths`);
+			let confirmedTotal = confirmed.data
+				.filter((item) => item.confirmed !== '' && item.provinceState === state && item.admin2 === county)
+				.map((item) => parseInt(item.confirmed));
+			let deathTotal = deaths.data
+				.filter((item) => item.deaths !== '' && item.provinceState === state && item.admin2 === county)
+				.map((item) => parseInt(item.deaths));
+
+			return { confirmed: confirmedTotal, deaths: deathTotal };
+		}
+
+		return null;
+	} catch (error) {
+		return error;
+	}
+}
+
 export const fetchCountries = async () => {
 	try {
 		const { data: { countries }} = await axios.get(`${url}/countries`);
@@ -83,6 +104,23 @@ export const fetchStates = async () => {
 			.map((item) => item.provinceState);
 
 		return [...new Set([...usaConfirmedStates, ...usaDeathStates])].sort();
+	} catch (error) {
+		return error;
+	}
+}
+
+export const fetchCountiesByState = async (state) => {
+	try {
+		const usaConfirmed = await axios.get(`${url}/countries/USA/confirmed`);
+		const usaDeaths = await axios.get(`${url}/countries/USA/deaths`);
+		const usaConfirmedCounties = usaConfirmed.data
+			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/) && item.provinceState === state && item.admin2 !== 'Unassigned')
+			.map((item) => item.admin2);
+		const usaDeathCounties = usaDeaths.data
+			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/) && item.provinceState === state && item.admin2 !== 'Unassigned')
+			.map((item) => item.admin2);
+
+		return [...new Set([...usaConfirmedCounties, ...usaDeathCounties])].sort();
 	} catch (error) {
 		return error;
 	}

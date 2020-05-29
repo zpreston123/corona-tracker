@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Cards, GlobalChart, USChart, CountryPicker, StatePicker } from './components';
+import {
+	Cards, GlobalChart, StateChart, CountyChart,
+	CountryPicker, StatePicker, CountyPicker
+} from './components';
 import styles from './App.module.css';
-import { fetchCountryData, fetchStateData } from './api';
+import { fetchCountryData, fetchStateData, fetchCountyData } from './api';
 import { defaults } from 'react-chartjs-2';
 import {
 	CircularProgress, Switch, ThemeProvider, createMuiTheme, Divider,
@@ -14,10 +17,16 @@ defaults.global.maintainAspectRatio = false;
 const App = () => {
 	const [countryData, setCountryData] = useState({});
 	const [stateData, setStateData] = useState({});
+	const [countyData, setCountyData] = useState({});
+
 	const [country, setCountry] = useState();
 	const [state, setState] = useState();
+	const [county, setCounty] = useState();
+
 	const [countryDataLoaded, setCountryDataLoaded] = useState(false);
 	const [stateDataLoaded, setStateDataLoaded] = useState(false);
+	const [countyDataLoaded, setCountyDataLoaded] = useState(false);
+
 	const [darkMode, setDarkMode] = useState(false);
 	const theme = createMuiTheme({
 		palette: {
@@ -60,6 +69,16 @@ const App = () => {
 		setState(state);
 	}
 
+	const handleCountyChange = async (county, state) => {
+		setCountyDataLoaded(false);
+
+		const countyData = await fetchCountyData(county, state);
+
+		setCountyDataLoaded(true);
+		setCountyData(countyData);
+		setCounty(county);
+	}
+
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline/>
@@ -77,13 +96,15 @@ const App = () => {
 				</Grid>
 				<img className={styles.image} src={image} alt="COVID-19"/>
 				<h1>{!country ? 'Global' : country}</h1>
-				<Cards data={countryData}/>
+				{!countryDataLoaded ? <CircularProgress/> : <Cards data={countryData}/>}
 				<CountryPicker handleCountryChange={handleCountryChange}/>
-				{countryDataLoaded ? <GlobalChart data={countryData} country={country}/> : <CircularProgress/>}
+				{!countryDataLoaded ? <CircularProgress/> : <GlobalChart data={countryData} country={country}/>}
 				<Divider className={styles.divider}/>
 				<h1>{!state ? 'US States / Territories' : state}</h1>
 				<StatePicker handleStateChange={handleStateChange}/>
-				{stateDataLoaded ? <USChart data={stateData} state={state}/> : <CircularProgress/>}
+				{!stateDataLoaded || !state ? null : <CountyPicker state={state} handleCountyChange={handleCountyChange}/>}
+				{!stateDataLoaded ? <CircularProgress/> : <StateChart data={stateData} state={state}/>}
+				{!countyDataLoaded || !stateDataLoaded ? null : <CountyChart data={countyData} county={county}/>}
 				<p className={styles.footer}>
 					Data sourced from John Hopkins University<br/>
 					CSSE via JSON API<br/><br/>

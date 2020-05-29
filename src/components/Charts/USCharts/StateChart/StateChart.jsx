@@ -1,8 +1,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import styles from './USChart.module.css';
+import styles from './StateChart.module.css';
 
-const USChart = ({ data: stateData, state }) => {
+const StateChart = ({ data: stateData, state }) => {
 	const lineChart = (
 		stateData.length
 			? (
@@ -33,4 +33,4 @@ const USChart = ({ data: stateData, state }) => {
 	)
 }
 
-export default USChart;
+export default StateChart;
