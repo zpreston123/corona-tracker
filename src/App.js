@@ -96,15 +96,30 @@ const App = () => {
 				</Grid>
 				<img className={styles.image} src={image} alt="COVID-19"/>
 				<h1>{!country ? 'Global' : country}</h1>
-				{!countryDataLoaded ? <CircularProgress/> : <Cards data={countryData}/>}
+				{!countryDataLoaded
+					? <CircularProgress/>
+					: <Cards data={countryData}/>
+				}
 				<CountryPicker handleCountryChange={handleCountryChange}/>
-				{!countryDataLoaded ? <CircularProgress/> : <GlobalChart data={countryData} country={country}/>}
+				{!countryDataLoaded
+					? <CircularProgress/>
+					: <GlobalChart data={countryData} country={country}/>
+				}
 				<Divider className={styles.divider}/>
 				<h1>{!state ? 'US States / Territories' : state}</h1>
 				<StatePicker handleStateChange={handleStateChange}/>
-				{!stateDataLoaded || !state ? null : <CountyPicker state={state} handleCountyChange={handleCountyChange}/>}
-				{!stateDataLoaded ? <CircularProgress/> : <StateChart data={stateData} state={state}/>}
-				{!countyDataLoaded || !stateDataLoaded || !county ? null : <CountyChart data={countyData} county={county}/>}
+				{!stateDataLoaded || !state
+					? null
+					: <CountyPicker state={state} handleCountyChange={handleCountyChange}/>
+				}
+				{!stateDataLoaded
+					? <CircularProgress/>
+					: <StateChart data={stateData} state={state}/>
+				}
+				{!countyDataLoaded || !stateDataLoaded || !county
+					? null
+					: <CountyChart data={countyData} county={county}/>
+				}
 				<p className={styles.footer}>
 					Data sourced from John Hopkins University<br/>
 					CSSE via JSON API<br/><br/>
