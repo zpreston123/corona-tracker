@@ -61,6 +61,58 @@ export const fetchStateData = async (state) => {
 	}
 }
 
+export const fetchTopConfirmedStates = async () => {
+	try {
+		let result = [];
+		let confirmed = await axios.get(`${url}/countries/USA/confirmed`);
+
+		confirmed.data.reduce((res, value) => {
+			if (!res[value.provinceState]) {
+				res[value.provinceState] = { state: value.provinceState, confirmed: 0 };
+				result.push(res[value.provinceState]);
+			}
+			res[value.provinceState].confirmed += value.confirmed;
+			return res;
+		}, {});
+
+		return result.sort((x, y) => {
+			if (x.confirmed > y.confirmed)
+				return -1;
+			if (x.confirmed < y.confirmed)
+				return 1;
+			return 0;
+		}).slice(0, 10);
+	} catch (error) {
+		return error;
+	}
+}
+
+export const fetchTopDeathStates = async () => {
+	try {
+		let result = [];
+		let deaths = await axios.get(`${url}/countries/USA/deaths`);
+
+		deaths.data.reduce((res, value) => {
+			if (!res[value.provinceState]) {
+				res[value.provinceState] = { state: value.provinceState, deaths: 0 };
+				result.push(res[value.provinceState]);
+			}
+			res[value.provinceState].deaths += value.deaths;
+			return res;
+		}, {});
+
+		return result.sort((x, y) => {
+			if (x.deaths > y.deaths)
+				return -1;
+			if (x.deaths < y.deaths)
+				return 1;
+			return 0;
+		}).slice(0, 10);
+	} catch (error) {
+		return error;
+	}
+}
+
 export const fetchCountyData = async (county, state) => {
 	try {
 		if (county !== '') {

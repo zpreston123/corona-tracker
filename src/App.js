@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
 	Cards, GlobalChart, StateChart, CountyChart,
-	CountryPicker, StatePicker, CountyPicker
+	CountryPicker, StatePicker, CountyPicker,
+	TopConfirmedStateChart, TopDeathStateChart
 } from './components';
 import styles from './App.module.css';
-import { fetchCountryData, fetchStateData, fetchCountyData } from './api';
+import { fetchCountryData, fetchStateData, fetchCountyData, fetchTopConfirmedStates, fetchTopDeathStates } from './api';
 import { defaults } from 'react-chartjs-2';
 import {
 	CircularProgress, Switch, ThemeProvider, createMuiTheme, Divider,
@@ -18,6 +19,8 @@ const App = () => {
 	const [countryData, setCountryData] = useState({});
 	const [stateData, setStateData] = useState({});
 	const [countyData, setCountyData] = useState({});
+	const [topConfirmedStateData, setTopConfirmedStateData] = useState({});
+	const [topDeathStateData, setTopDeathStateData] = useState({});
 
 	const [country, setCountry] = useState();
 	const [state, setState] = useState();
@@ -25,6 +28,8 @@ const App = () => {
 
 	const [countryDataLoaded, setCountryDataLoaded] = useState(false);
 	const [stateDataLoaded, setStateDataLoaded] = useState(false);
+	const [topConfirmedStateDataLoaded, setTopConfirmedStateDataLoaded] = useState(false);
+	const [topDeathStateDataLoaded, setTopDeathStateDataLoaded] = useState(false);
 	const [countyDataLoaded, setCountyDataLoaded] = useState(false);
 
 	const [darkMode, setDarkMode] = useState(false);
@@ -43,6 +48,14 @@ const App = () => {
 			const stateData = await fetchStateData();
 			setStateDataLoaded(true);
 			setStateData(stateData);
+
+			const topConfirmedStates = await fetchTopConfirmedStates();
+			setTopConfirmedStateDataLoaded(true);
+			setTopConfirmedStateData(topConfirmedStates);
+
+			const topDeathStates = await fetchTopDeathStates();
+			setTopDeathStateDataLoaded(true);
+			setTopDeathStateData(topDeathStates);
 		}
 		loadData();
 	}, []);
@@ -120,6 +133,14 @@ const App = () => {
 					? null
 					: <CountyChart data={countyData} county={county}/>
 				}
+				<h1>Top 10 States with Confirmed Cases</h1>
+				{!topConfirmedStateDataLoaded
+					? <CircularProgress/>
+					: <TopConfirmedStateChart data={topConfirmedStateData}/>}
+				<h1>Top 10 States with Deaths</h1>
+				{!topDeathStateDataLoaded
+					? <CircularProgress/>
+					: <TopDeathStateChart data={topDeathStateData}/>}
 				<p className={styles.footer}>
 					Data sourced from John Hopkins University<br/>
 					CSSE via JSON API<br/><br/>
