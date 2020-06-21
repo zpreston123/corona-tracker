@@ -19,7 +19,7 @@ const CountyPicker = ({ state, handleCountyChange }) => {
 	return (
 		<FormControl className={styles.formControl}>
 	        <InputLabel shrink htmlFor="county-native-label-placeholder">Select County</InputLabel>
-			<NativeSelect defaultValue="" onChange={(e) => handleCountyChange(e.target.value, state)}
+			<NativeSelect defaultValue="" onChange={(event) => handleCountyChange(event.target.value, state)}
 				inputProps={{
 		            name: 'county',
 		            id: 'county-native-label-placeholder'

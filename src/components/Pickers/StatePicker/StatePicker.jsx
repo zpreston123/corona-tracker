@@ -19,7 +19,7 @@ const StatePicker = ({ handleStateChange }) => {
 	return (
 		<FormControl className={styles.formControl}>
 	        <InputLabel shrink htmlFor="state-native-label-placeholder">Select State / Territory</InputLabel>
-			<NativeSelect defaultValue="" onChange={(e) => handleStateChange(e.target.value)}
+			<NativeSelect defaultValue="" onChange={(event) => handleStateChange(event.target.value)}
 				inputProps={{
 		            name: 'state',
 		            id: 'state-native-label-placeholder'
