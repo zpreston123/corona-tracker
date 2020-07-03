@@ -13,18 +13,24 @@ const TopDeathStateChart = ({ data }) => {
 							label: 'People',
 							data: data.map(item => item.deaths),
 							backgroundColor: [
-								'#b71c1c',
-								'#ff5722',
-								'#ffca28',
-								'#43a047',
-								'#009688',
-								'#039be5',
-								'#3949ab',
-								'#5e35b1',
-								'#8e24aa',
-								'#c2185b'
+								'rgb(183, 28, 28)',
+								'rgb(255, 87, 34)',
+								'rgb(255, 202, 40)',
+								'rgb(67, 160, 71)',
+								'rgb(0, 150, 136)',
+								'rgb(3, 155, 229)',
+								'rgb(57, 73, 171)',
+								'rgb(94, 53, 177)',
+								'rgb(142, 36, 170)',
+								'rgb(194, 24, 91)',
+								'rgb(96, 125, 139)'
 							]
 						}]
+					}}
+					options={{
+						legend: {
+							display: false
+						}
 					}}
 			/>) : null
 	);
