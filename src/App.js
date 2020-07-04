@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
 	Cards, GlobalChart, StateChart, CountyChart,
 	CountryPicker, StatePicker, CountyPicker,
-	TopConfirmedStateChart, TopDeathStateChart
+	TopConfirmedStateTable, TopDeathStateTable
 } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchStateData, fetchCountyData, fetchTopConfirmedStates, fetchTopDeathStates } from './api';
@@ -136,11 +136,11 @@ const App = () => {
 				<h1>Top 10 States with Confirmed Cases</h1>
 				{!topConfirmedStateDataLoaded
 					? <CircularProgress/>
-					: <TopConfirmedStateChart data={topConfirmedStateData}/>}
+					: <TopConfirmedStateTable data={topConfirmedStateData}/>}
 				<h1>Top 10 States with Deaths</h1>
 				{!topDeathStateDataLoaded
 					? <CircularProgress/>
-					: <TopDeathStateChart data={topDeathStateData}/>}
+					: <TopDeathStateTable data={topDeathStateData}/>}
 				<p className={styles.footer}>
 					Data sourced from John Hopkins University<br/>
 					CSSE via JSON API<br/><br/>
