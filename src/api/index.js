@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 const url = 'https://covid19.mathdro.id/api';
 
@@ -13,11 +14,7 @@ export const fetchInitialCountryData = async () => {
 }
 
 export const fetchCountryData = async (country) => {
-	let changeableUrl = url;
-
-	if (country) {
-		changeableUrl = `${url}/countries/${country}`;
-	}
+	let changeableUrl = !country ? url : `${url}/countries/${country}`;
 
 	try {
 		const { data: { confirmed, recovered, deaths, lastUpdate } } = await axios.get(changeableUrl);
@@ -63,19 +60,14 @@ export const fetchStateData = async (state) => {
 
 export const fetchTopConfirmedStates = async () => {
 	try {
-		let result = [];
 		let { data } = await axios.get(`${url}/countries/USA/confirmed`);
 
-		data.reduce((res, value) => {
-			if (!res[value.provinceState]) {
-				res[value.provinceState] = { state: value.provinceState, confirmed: 0 };
-				result.push(res[value.provinceState]);
-			}
-			res[value.provinceState].confirmed += value.confirmed;
-			return res;
-		}, {});
-
-		return result.sort((x, y) => y.confirmed - x.confirmed).slice(0, 10);
+		return _(data)
+			.groupBy('provinceState')
+			.map((array, key) => ({ 'state': key, 'total': _.sumBy(array, 'confirmed') }))
+			.sort((item1, item2) => item2.total - item1.total)
+			.slice(0, 10)
+			.value();
 	} catch (error) {
 		return error;
 	}
@@ -83,19 +75,14 @@ export const fetchTopConfirmedStates = async () => {
 
 export const fetchTopDeathStates = async () => {
 	try {
-		let result = [];
 		let { data } = await axios.get(`${url}/countries/USA/deaths`);
 
-		data.reduce((res, value) => {
-			if (!res[value.provinceState]) {
-				res[value.provinceState] = { state: value.provinceState, deaths: 0 };
-				result.push(res[value.provinceState]);
-			}
-			res[value.provinceState].deaths += value.deaths;
-			return res;
-		}, {});
-
-		return result.sort((x, y) => y.deaths - x.deaths).slice(0, 10);
+		return _(data)
+			.groupBy('provinceState')
+			.map((array, key) => ({ 'state': key, 'total': _.sumBy(array, 'deaths') }))
+			.sort((item1, item2) => item2.total - item1.total)
+			.slice(0, 10)
+			.value();
 	} catch (error) {
 		return error;
 	}
@@ -103,20 +90,13 @@ export const fetchTopDeathStates = async () => {
 
 export const fetchCountyData = async (county, state) => {
 	try {
-		if (county !== '') {
-			let confirmed = await axios.get(`${url}/countries/USA/confirmed`);
-			let deaths = await axios.get(`${url}/countries/USA/deaths`);
-			let confirmedTotal = confirmed.data
-				.filter((item) => item.confirmed !== '' && item.provinceState === state && item.admin2 === county)
-				.map((item) => parseInt(item.confirmed));
-			let deathTotal = deaths.data
-				.filter((item) => item.deaths !== '' && item.provinceState === state && item.admin2 === county)
-				.map((item) => parseInt(item.deaths));
+		let { data } = await axios.get(`${url}/countries/USA/confirmed`);
 
-			return { confirmed: confirmedTotal, deaths: deathTotal };
-		}
+		let { confirmed, deaths } = data
+			.filter(({ provinceState, admin2 }) => provinceState === state && admin2 === county)
+			.reduce(({ confirmed, deaths }) => ({ confirmed: confirmed, deaths: deaths }));
 
-		return { confirmed: null, deaths: null };
+		return { confirmed: confirmed, deaths: deaths };
 	} catch (error) {
 		return error;
 	}
@@ -134,16 +114,14 @@ export const fetchCountries = async () => {
 
 export const fetchStates = async () => {
 	try {
-		const usaConfirmed = await axios.get(`${url}/countries/USA/confirmed`);
-		const usaDeaths = await axios.get(`${url}/countries/USA/deaths`);
-		const usaConfirmedStates = usaConfirmed.data
-			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/))
-			.map((item) => item.provinceState);
-		const usaDeathStates = usaDeaths.data
-			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/))
-			.map((item) => item.provinceState);
+		const { data } = await axios.get(`${url}/countries/USA/confirmed`);
 
-		return [...new Set([...usaConfirmedStates, ...usaDeathStates])].sort();
+		return _(data)
+			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/))
+			.map('provinceState')
+			.uniq()
+			.sort()
+			.value();
 	} catch (error) {
 		return error;
 	}
@@ -151,16 +129,14 @@ export const fetchStates = async () => {
 
 export const fetchCountiesByState = async (state) => {
 	try {
-		const usaConfirmed = await axios.get(`${url}/countries/USA/confirmed`);
-		const usaDeaths = await axios.get(`${url}/countries/USA/deaths`);
-		const usaConfirmedCounties = usaConfirmed.data
-			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/) && item.provinceState === state && item.admin2 !== 'Unassigned')
-			.map((item) => item.admin2);
-		const usaDeathCounties = usaDeaths.data
-			.filter((item) => !item.provinceState.match(/(Diamond Princess|Grand Princess)/) && item.provinceState === state && item.admin2 !== 'Unassigned')
-			.map((item) => item.admin2);
+		const { data } = await axios.get(`${url}/countries/USA/confirmed`);
 
-		return [...new Set([...usaConfirmedCounties, ...usaDeathCounties])].sort();
+		return _(data)
+			.filter(({ provinceState, admin2 }) => !provinceState.match(/(Diamond Princess|Grand Princess)/) && provinceState === state && admin2 !== 'Unassigned')
+			.map('admin2')
+			.uniq()
+			.sort()
+			.value();
 	} catch (error) {
 		return error;
 	}

@@ -21,7 +21,7 @@ const TopConfirmedStateTable = ({ data }) => {
 					  	{data.map(item => (
 					  		<TableRow key={item.state}>
 						  		<TableCell>{item.state}</TableCell>
-						  		<TableCell>{item.confirmed}</TableCell>
+						  		<TableCell>{item.total}</TableCell>
 					  		</TableRow>
 					  	))}
 				  	</TableBody>
