@@ -1,5 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment';
 
 const url = 'https://covid19.mathdro.id/api';
 
@@ -14,7 +15,7 @@ export const fetchInitialCountryData = async () => {
 }
 
 export const fetchCountryData = async (country) => {
-	let changeableUrl = !country ? url : `${url}/countries/${country}`;
+	const changeableUrl = !country ? url : `${url}/countries/${country}`;
 
 	try {
 		const { data: { confirmed, recovered, deaths, lastUpdate } } = await axios.get(changeableUrl);
@@ -27,32 +28,23 @@ export const fetchCountryData = async (country) => {
 
 export const fetchStateData = async (state) => {
 	try {
-		let stateData = [];
-		let currentDate = new Date();
-		let yesterday = currentDate.setDate(currentDate.getDate() - 1);
+		const result = [];
+		const currentDate = moment(new Date('1/22/2020'));
+		const yesterday = moment(new Date()).subtract(1, 'days');
 
-		for (let date = new Date('1/22/2020'); date <= yesterday; date.setDate(date.getDate() + 1)) {
-			let reportDate = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2);
+		for (let date = currentDate; date.isSameOrBefore(yesterday); date.add(1, 'days')) {
+			let reportDate = date.format('YYYY-MM-DD');
 			let { data } = await axios.get(`${url}/daily/${reportDate}`);
-			let confirmedTotal = data
-				.filter((item) => {
-					let firstCondition = (state) ? item.provinceState === state : item.countryRegion === 'US';
-					return firstCondition && item.confirmed !== '';
-				})
-				.map((item) => parseInt(item.confirmed))
-				.reduce((total, current) => total + current, 0);
-			let deathTotal = data
-				.filter((item) => {
-					let firstCondition = (state) ? item.provinceState === state : item.countryRegion === 'US';
-					return firstCondition && item.deaths !== '';
-				})
-				.map((item) => parseInt(item.deaths))
-				.reduce((total, current) => total + current, 0);
+			let stateData = data.filter((item) => (state) ? item.provinceState === state : item.countryRegion === 'US');
 
-			stateData.push({ confirmed: confirmedTotal, deaths: deathTotal, date: reportDate });
+			result.push({
+				confirmed: _.sumBy(stateData, (item) => Number(item.confirmed)),
+				deaths: _.sumBy(stateData, (item) => Number(item.deaths)),
+				date: reportDate
+			});
 		}
 
-		return stateData;
+		return result;
 	} catch (error) {
 		return error;
 	}
@@ -60,7 +52,7 @@ export const fetchStateData = async (state) => {
 
 export const fetchTopConfirmedStates = async () => {
 	try {
-		let { data } = await axios.get(`${url}/countries/USA/confirmed`);
+		const { data } = await axios.get(`${url}/countries/USA/confirmed`);
 
 		return _(data)
 			.groupBy('provinceState')
@@ -75,7 +67,7 @@ export const fetchTopConfirmedStates = async () => {
 
 export const fetchTopDeathStates = async () => {
 	try {
-		let { data } = await axios.get(`${url}/countries/USA/deaths`);
+		const { data } = await axios.get(`${url}/countries/USA/deaths`);
 
 		return _(data)
 			.groupBy('provinceState')
@@ -90,9 +82,8 @@ export const fetchTopDeathStates = async () => {
 
 export const fetchCountyData = async (county, state) => {
 	try {
-		let { data } = await axios.get(`${url}/countries/USA/confirmed`);
-
-		let { confirmed, deaths } = data
+		const { data } = await axios.get(`${url}/countries/USA/confirmed`);
+		const { confirmed, deaths } = data
 			.filter(({ provinceState, admin2 }) => provinceState === state && admin2 === county)
 			.reduce(({ confirmed, deaths }) => ({ confirmed: confirmed, deaths: deaths }));
 
