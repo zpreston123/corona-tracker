@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
-
-import styles from './CountyPicker.module.css';
-
 import { fetchCountiesByState } from '../../../api';
+import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
+import styles from './CountyPicker.module.css';
 
 const CountyPicker = ({ state, handleCountyChange }) => {
 	const [fetchedCounties, setFetchedCounties] = useState([]);

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
-
-import styles from './StatePicker.module.css';
-
 import { fetchStates } from '../../../api';
+import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
+import styles from './StatePicker.module.css';
 
 const StatePicker = ({ handleStateChange }) => {
 	const [fetchedStates, setFetchedStates] = useState([]);
