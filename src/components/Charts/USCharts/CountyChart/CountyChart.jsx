@@ -20,7 +20,7 @@ const CountyChart = ({ data: { confirmed, deaths }, county }) => {
 					}}
 					options={{
 						legend: { display: true },
-						title: { display: true, text: `Current state in ${county} county`}
+						title: { display: true, text: `Current status in ${county} county`}
 					}}
 			/>) : null
 	);
