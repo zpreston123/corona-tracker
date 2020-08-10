@@ -18,10 +18,10 @@ const TopDeathStateTable = ({ data }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map(item => (
-                <TableRow key={item.state}>
-                  <TableCell>{item.state}</TableCell>
-                  <TableCell>{item.total}</TableCell>
+              {data.map(({ state, total }) => (
+                <TableRow key={state}>
+                  <TableCell>{state}</TableCell>
+                  <TableCell>{total}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
