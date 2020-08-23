@@ -3,9 +3,9 @@ import {
 	Paper, Table, TableBody, TableCell,
 	TableContainer, TableHead, TableRow
 } from '@material-ui/core';
-import styles from './TopConfirmedStateTable.module.css';
+import styles from './MostConfirmedStatesTable.module.css';
 
-const TopConfirmedStateTable = ({ data }) => {
+const MostConfirmedStatesTable = ({ data }) => {
 	const table = (
 		data.length
 		  ? (
@@ -37,4 +37,4 @@ const TopConfirmedStateTable = ({ data }) => {
 	)
 }
 
-export default TopConfirmedStateTable;
+export default MostConfirmedStatesTable;

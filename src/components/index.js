@@ -1,8 +1,8 @@
 export { default as Cards } from './Cards/Cards';
 export { default as GlobalChart } from './Charts/GlobalChart/GlobalChart';
 export { default as StateChart } from './Charts/USCharts/StateChart/StateChart';
-export { default as TopConfirmedStateTable } from './Tables/TopConfirmedStateTable/TopConfirmedStateTable';
-export { default as TopDeathStateTable } from './Tables/TopDeathStateTable/TopDeathStateTable';
+export { default as MostConfirmedStatesTable } from './Tables/MostConfirmedStatesTable/MostConfirmedStatesTable';
+export { default as MostDeathStatesTable } from './Tables/MostDeathStatesTable/MostDeathStatesTable';
 export { default as CountyChart } from './Charts/USCharts/CountyChart/CountyChart';
 export { default as CountryPicker } from './Pickers/CountryPicker/CountryPicker';
 export { default as StatePicker } from './Pickers/StatePicker/StatePicker';

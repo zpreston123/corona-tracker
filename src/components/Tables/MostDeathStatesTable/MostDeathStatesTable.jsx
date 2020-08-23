@@ -3,9 +3,9 @@ import {
   Paper, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow
 } from '@material-ui/core';
-import styles from './TopDeathStateTable.module.css';
+import styles from './MostDeathStatesTable.module.css';
 
-const TopDeathStateTable = ({ data }) => {
+const MostDeathStatesTable = ({ data }) => {
   const table = (
     data.length
       ? (
@@ -37,4 +37,4 @@ const TopDeathStateTable = ({ data }) => {
   )
 }
 
-export default TopDeathStateTable;
+export default MostDeathStatesTable;
