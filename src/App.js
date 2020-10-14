@@ -141,12 +141,12 @@ const App = () => {
 				{!topDeathStateDataLoaded
 					? <CircularProgress/>
 					: <MostDeathStatesTable data={topDeathStateData}/>}
-				<div className={styles.footer}>
-                    <Typography variant="body1" component="h2">
-    					Daily US data fetched from <Link href="https://covidtracking.com/data/api">COVID Tracking Project API</Link>.<br/>
-						Global and state data fetched from <Link href="https://github.com/mathdroid/covid-19-api">Mathdroid COVID-19 API</Link>.
-                    </Typography>
-                </div>
+			</div>
+			<div className={styles.footer}>
+				<Typography variant="body1" component="h2">
+					Daily US data fetched from <Link href="https://covidtracking.com/data/api">COVID Tracking Project API</Link>.<br/>
+					Global and state data fetched from <Link href="https://github.com/mathdroid/covid-19-api">Mathdroid COVID-19 API</Link>.
+				</Typography>
 			</div>
 		</ThemeProvider>
 	);
