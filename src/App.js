@@ -9,7 +9,7 @@ import { fetchCountryData, fetchStateData, fetchCountyData, fetchTopConfirmedSta
 import { defaults } from 'react-chartjs-2';
 import {
 	CircularProgress, Switch, ThemeProvider, createMuiTheme, Divider,
-	CssBaseline, FormControl, FormGroup, FormControlLabel, Grid
+	CssBaseline, FormControl, FormGroup, FormControlLabel, Grid, Typography, Link
 } from '@material-ui/core';
 import image from './images/image.png';
 
@@ -141,11 +141,12 @@ const App = () => {
 				{!topDeathStateDataLoaded
 					? <CircularProgress/>
 					: <MostDeathStatesTable data={topDeathStateData}/>}
-				<p className={styles.footer}>
-					Data sourced from John Hopkins University<br/>
-					CSSE via JSON API<br/><br/>
-					coronavirus.jhu.edu/map.html
-				</p>
+				<div className={styles.footer}>
+                    <Typography variant="body1" component="h2">
+    					Daily US data fetched from <Link href="https://covidtracking.com/data/api">COVID Tracking Project API</Link>.<br/>
+						Global and state data fetched from <Link href="https://github.com/mathdroid/covid-19-api">Mathdroid COVID-19 API</Link>.
+                    </Typography>
+                </div>
 			</div>
 		</ThemeProvider>
 	);
