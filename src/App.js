@@ -144,8 +144,8 @@ const App = () => {
 			</div>
 			<div className={styles.footer}>
 				<Typography variant="body1" component="h2">
-					Daily US data fetched from <Link href="https://covidtracking.com/data/api">COVID Tracking Project API</Link>.<br/>
-					Global and state data fetched from <Link href="https://github.com/mathdroid/covid-19-api">Mathdroid COVID-19 API</Link>.
+					Daily US data sourced from <Link href="https://covidtracking.com/">COVID Tracking Project</Link> via JSON API.<br/>
+					Global and state data sourced from <Link href="https://coronavirus.jhu.edu/">John Hopkins University CSSE</Link> via JSON API.
 				</Typography>
 			</div>
 		</ThemeProvider>
