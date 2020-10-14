@@ -108,7 +108,7 @@ const App = () => {
 					</FormControl>
 				</Grid>
 				<img className={styles.image} src={image} alt="COVID-19"/>
-				<h1>{!country ? 'Global' : country}</h1>
+				{!country ? null : <h1>{country}</h1>}
 				{!countryDataLoaded
 					? <CircularProgress/>
 					: <Cards data={countryData}/>
