@@ -4,11 +4,22 @@ import moment from 'moment';
 
 const url = 'https://covid19.mathdro.id/api';
 
-export const fetchInitialCountryData = async () => {
-	try {
-		const { data } = await axios.get(`${url}/daily`);
+// export const fetchInitialCountryData = async () => {
+// 	try {
+// 		const { data } = await axios.get(`${url}/daily`);
 
-		return data.map(({ confirmed, deaths, reportDate: date }) => ({ confirmed: confirmed.total, deaths: deaths.total, date }));
+// 		return data.map(({ confirmed, deaths, reportDate: date }) => ({ confirmed: confirmed.total, deaths: deaths.total, date }));
+// 	} catch (error) {
+// 		return error;
+// 	}
+// }
+
+export const fetchDailyData = async () => {
+	try {
+		const { data } = await axios.get('https://api.covidtracking.com/v1/us/daily.json');
+
+		return data.map(({ positive, recovered, death, dateChecked: date }) => ({ confirmed: positive, recovered, deaths: death, date }))
+			.sort((item1, item2) => (new Date(item1.date) - new Date(item2.date)));
 	} catch (error) {
 		return error;
 	}

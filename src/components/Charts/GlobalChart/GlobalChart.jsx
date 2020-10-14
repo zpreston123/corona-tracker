@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { fetchInitialCountryData } from '../../../api';
+import { fetchDailyData } from '../../../api';
 import { Line, Bar } from 'react-chartjs-2';
 import styles from './GlobalChart.module.css';
 
 const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
-	const [initialCountryData, setInitialCountryData] = useState([]);
+	const [dailyData, setDailyData] = useState([]);
 
 	useEffect(() => {
 		const fetchAPI = async () => {
-			setInitialCountryData(await fetchInitialCountryData());
+			setDailyData(await fetchDailyData());
 		}
 
 		fetchAPI();
 	}, []);
 
 	const lineChart = (
-		initialCountryData.length
+		dailyData.length
 			? (
 				<Line
 					data={{
-						labels: initialCountryData.map(({ date }) => date),
+						labels: dailyData.map(({ date }) => new Date(date).toLocaleDateString()),
 						datasets: [{
-							data: initialCountryData.map(({ confirmed }) => confirmed),
+							data: dailyData.map(({ confirmed }) => confirmed),
 							label: 'Infected',
 							borderColor: '#3333ff',
 							backgroundColor: 'rgba(0, 0, 255, 0.1)',
 							fill: true
 						}, {
-							data: initialCountryData.map(({ deaths }) => deaths),
+							data: dailyData.map(({ deaths }) => deaths),
 							label: 'Deaths',
 							borderColor: 'red',
 							backgroundColor: 'rgba(255, 0, 0, 0.3)',
 							fill: true
+						}, {
+				            data: dailyData.map((data) => data.recovered),
+				            label: 'Recovered',
+				            borderColor: 'green',
+				            backgroundColor: 'rgba(0, 255, 0, 0.5)',
+				            fill: true
 						}]
 					}}
 			/>) : null
