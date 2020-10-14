@@ -125,8 +125,8 @@ const App = () => {
 					? null
 					: <CountyPicker state={state} handleCountyChange={handleCountyChange}/>
 				}
-				{!stateDataLoaded
-					? <CircularProgress/>
+				{!stateDataLoaded || !state
+					? null
 					: <StateChart data={stateData} state={state}/>
 				}
 				{!countyDataLoaded || !stateDataLoaded || !county

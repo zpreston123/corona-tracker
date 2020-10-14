@@ -1,5 +1,5 @@
-import axios from 'axios';
 import _ from 'lodash';
+import axios from 'axios';
 import moment from 'moment';
 
 const url = 'https://covid19.mathdro.id/api';
@@ -39,6 +39,10 @@ export const fetchCountryData = async (country) => {
 
 export const fetchStateData = async (state) => {
 	try {
+		if (state === "") {
+			return null;
+		}
+
 		const result = [];
 		const currentDate = moment(new Date('1/22/2020'));
 		const yesterday = moment(new Date()).subtract(1, 'days');
@@ -46,7 +50,7 @@ export const fetchStateData = async (state) => {
 		for (let date = currentDate; date.isSameOrBefore(yesterday); date.add(1, 'days')) {
 			let reportDate = date.format('YYYY-MM-DD');
 			let { data } = await axios.get(`${url}/daily/${reportDate}`);
-			let stateData = data.filter((item) => (state) ? item.provinceState === state : item.countryRegion === 'US');
+			let stateData = data.filter((item) => item.provinceState === state);
 
 			result.push({
 				confirmed: _.sumBy(stateData, (item) => Number(item.confirmed)),

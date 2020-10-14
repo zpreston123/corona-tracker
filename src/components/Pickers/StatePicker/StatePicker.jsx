@@ -23,7 +23,7 @@ const StatePicker = ({ handleStateChange }) => {
 		            id: 'state-native-label-placeholder'
 				}}
 			>
-				<option value="">All</option>
+				<option value="">Select an option</option>
 				{fetchedStates.map((state, i) => <option key={i} value={state}>{state}</option>)}
 			</NativeSelect>
 		</FormControl>
