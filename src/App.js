@@ -108,7 +108,7 @@ const App = () => {
 					</FormControl>
 				</Grid>
 				<img className={styles.image} src={image} alt="COVID-19"/>
-				{!country ? null : <h1>{country}</h1>}
+				{!country ? null : <Typography variant="h3" gutterBottom>{country}</Typography>}
 				{!countryDataLoaded
 					? <CircularProgress/>
 					: <Cards data={countryData}/>
@@ -118,8 +118,8 @@ const App = () => {
 					? <CircularProgress/>
 					: <GlobalChart data={countryData} country={country}/>
 				}
-				<Divider className={styles.divider}/>
-				<h1>{!state ? 'US States / Territories' : state}</h1>
+				<Divider className={styles.divider}/><br/>
+		        <Typography gutterBottom variant="h4" component="h2">{!state ? 'US States / Territories' : state}</Typography>
 				<StatePicker handleStateChange={handleStateChange}/>
 				{!stateDataLoaded || !state
 					? null
@@ -132,12 +132,12 @@ const App = () => {
 				{!countyDataLoaded || !stateDataLoaded || !county
 					? null
 					: <CountyChart data={countyData} county={county}/>
-				}
-				<h1>States with Most Confirmed Cases</h1>
+				}<br/>
+		        <Typography gutterBottom variant="h5" component="h2">States with Most Confirmed Cases</Typography>
 				{!topConfirmedStateDataLoaded
 					? <CircularProgress/>
 					: <MostConfirmedStatesTable data={topConfirmedStateData}/>}
-				<h1>States with Most Deaths</h1>
+		        <Typography gutterBottom variant="h5" component="h2">States with Most Deaths</Typography>
 				{!topDeathStateDataLoaded
 					? <CircularProgress/>
 					: <MostDeathStatesTable data={topDeathStateData}/>}
