@@ -119,7 +119,7 @@ const App = () => {
 					: <GlobalChart data={countryData} country={country}/>
 				}
 				<Divider className={styles.divider}/><br/>
-		        <Typography gutterBottom variant="h4" component="h2">{!state ? 'US States / Territories' : state}</Typography>
+		        <Typography gutterBottom variant="h4" component="h2">{!state ? 'United States' : state}</Typography>
 				<StatePicker handleStateChange={handleStateChange}/>
 				{!stateDataLoaded || !state
 					? null
