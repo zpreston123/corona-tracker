@@ -133,11 +133,11 @@ const App = () => {
 					? null
 					: <CountyChart data={countyData} county={county}/>
 				}<br/>
-		        <Typography gutterBottom variant="h5" component="h2">States with Most Confirmed Cases</Typography>
+		        <Typography gutterBottom variant="h5" component="h2">Most Confirmed Cases</Typography>
 				{!topConfirmedStateDataLoaded
 					? <CircularProgress/>
 					: <MostConfirmedStatesTable data={topConfirmedStateData}/>}
-		        <Typography gutterBottom variant="h5" component="h2">States with Most Deaths</Typography>
+		        <Typography gutterBottom variant="h5" component="h2">Most Deaths</Typography>
 				{!topDeathStateDataLoaded
 					? <CircularProgress/>
 					: <MostDeathStatesTable data={topDeathStateData}/>}
