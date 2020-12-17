@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-	Paper, Table, TableBody, TableCell,
-	TableContainer, TableHead, TableRow
-} from '@material-ui/core';
-import styles from './MostConfirmedStatesTable.module.css';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import styles from './StatesTable.module.css';
 
-const MostConfirmedStatesTable = ({ data }) => {
+const StatesTable = ({ data }) => {
 	const table = (
 		data.length
 		  ? (
@@ -37,4 +34,4 @@ const MostConfirmedStatesTable = ({ data }) => {
 	)
 }
 
-export default MostConfirmedStatesTable;
+export default StatesTable;

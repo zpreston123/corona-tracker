@@ -19,7 +19,7 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 			? (
 				<Line
 					data={{
-						labels: dailyData.map(({ date }) => new Date(date).toLocaleDateString()),
+						labels: dailyData.map(({ date }) => date),
 						datasets: [{
 							data: dailyData.map(({ confirmed }) => confirmed),
 							label: 'Infected',

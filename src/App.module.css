@@ -10,8 +10,7 @@ body {
 }
 
 .image {
-	width: 370px;
-	margin-top: 45px;
+	max-width: 160px;
 }
 
 .divider {

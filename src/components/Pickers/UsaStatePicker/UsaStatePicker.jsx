@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { fetchStates } from '../../../api';
+import { fetchUsaStates } from '../../../api';
 import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
-import styles from './StatePicker.module.css';
+import styles from './UsaStatePicker.module.css';
 
-const StatePicker = ({ handleStateChange }) => {
-	const [fetchedStates, setFetchedStates] = useState([]);
+const UsaStatePicker = ({ handleUsaStateChange }) => {
+	const [fetchedUsaStates, setFetchedUsaStates] = useState([]);
 
 	useEffect(() => {
 		const fetchAPI = async () => {
-			setFetchedStates(await fetchStates());
+			setFetchedUsaStates(await fetchUsaStates());
 		}
 
 		fetchAPI();
@@ -17,17 +17,17 @@ const StatePicker = ({ handleStateChange }) => {
 	return (
 		<FormControl className={styles.formControl}>
 	        <InputLabel shrink htmlFor="state-native-label-placeholder">Select State / Territory</InputLabel>
-			<NativeSelect defaultValue="" onChange={(event) => handleStateChange(event.target.value)}
+			<NativeSelect defaultValue="" onChange={(event) => handleUsaStateChange(event.target.value)}
 				inputProps={{
 		            name: 'state',
 		            id: 'state-native-label-placeholder'
 				}}
 			>
 				<option value="">Select an option</option>
-				{fetchedStates.map((state, i) => <option key={i} value={state}>{state}</option>)}
+				{fetchedUsaStates.map(({ state, name }, i) => <option key={i} value={state}>{name}</option>)}
 			</NativeSelect>
 		</FormControl>
 	)
 }
 
-export default StatePicker;
+export default UsaStatePicker;
