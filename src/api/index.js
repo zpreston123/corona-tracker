@@ -2,11 +2,12 @@ import axios from 'axios';
 import moment from 'moment';
 import convertState from './convertState';
 
-const url = 'https://covid19.mathdro.id/api';
+const MATHDRO_URL = 'https://covid19.mathdro.id/api';
+const COVID_TRACKING_URL = 'https://api.covidtracking.com/v1';
 
 export const fetchDailyData = async () => {
 	try {
-		const { data } = await axios.get('https://api.covidtracking.com/v1/us/daily.json');
+		const { data } = await axios.get(`${COVID_TRACKING_URL}/us/daily.json`);
 
 		return data
 			.map(({ positive, recovered, death, date }) => ({
@@ -24,7 +25,7 @@ export const fetchDailyData = async () => {
 }
 
 export const fetchCountryData = async (country) => {
-	const changeableUrl = !country ? url : `${url}/countries/${country}`;
+	const changeableUrl = !country ? MATHDRO_URL : `${MATHDRO_URL}/countries/${country}`;
 
 	try {
 		const { data: { confirmed, recovered, deaths, lastUpdate } } = await axios.get(changeableUrl);
@@ -37,7 +38,7 @@ export const fetchCountryData = async (country) => {
 
 export const fetchUsaStateData = async (state) => {
 	try {
-		const { data } = await axios.get(`https://api.covidtracking.com/v1/states/${state.toLowerCase()}/daily.json`);
+		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/${state.toLowerCase()}/daily.json`);
 
 		return data
 			.map(({ state, positive, death, date }) => ({
@@ -53,9 +54,9 @@ export const fetchUsaStateData = async (state) => {
 	}
 }
 
-export const fetchTopConfirmedStates = async () => {
+export const fetchMostConfirmedStates = async () => {
 	try {
-		const { data } = await axios.get('https://api.covidtracking.com/v1/states/current.json');
+		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/current.json`);
 
 		return data
 			.map(({ state, positive }) => ({ state: convertState(state), total: positive }))
@@ -66,9 +67,9 @@ export const fetchTopConfirmedStates = async () => {
 	}
 }
 
-export const fetchTopDeathStates = async () => {
+export const fetchMostDeathStates = async () => {
 	try {
-		const { data } = await axios.get('https://api.covidtracking.com/v1/states/current.json');
+		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/current.json`);
 
 		return data
 			.map(({ state, death }) => ({ state: convertState(state), total: death }))
@@ -81,7 +82,7 @@ export const fetchTopDeathStates = async () => {
 
 export const fetchCountries = async () => {
 	try {
-		const { data: { countries } } = await axios.get(`${url}/countries`);
+		const { data: { countries } } = await axios.get(`${MATHDRO_URL}/countries`);
 
 		return countries.map((country) => country.name);
 	} catch (error) {
@@ -91,7 +92,7 @@ export const fetchCountries = async () => {
 
 export const fetchUsaStates = async () => {
 	try {
-		const { data } = await axios.get('https://api.covidtracking.com/v1/states/info.json');
+		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/info.json`);
 
 		return data.map((item) => ({ state: item.state, name: item.name }));
 	} catch (error) {
