@@ -1,8 +1,8 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
-import styles from './StatesTable.module.css';
+import styles from './UsaStatesTable.module.css';
 
-const StatesTable = ({ data }) => {
+const UsaStatesTable = ({ data }) => {
 	const table = (
 		data.length
 		  ? (
@@ -34,4 +34,4 @@ const StatesTable = ({ data }) => {
 	)
 }
 
-export default StatesTable;
+export default UsaStatesTable;

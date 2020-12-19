@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
 	Cards, GlobalChart, UsaStateChart,
-	CountryPicker, UsaStatePicker, StatesTable
+	CountryPicker, UsaStatePicker, UsaStatesTable
 } from './components';
 import styles from './App.module.css';
-import { fetchCountryData, fetchUsaStateData, fetchTopConfirmedStates, fetchTopDeathStates } from './api';
+import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
 import convertState from './api/convertState';
 import { defaults } from 'react-chartjs-2';
 import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createMuiTheme, Divider, CssBaseline, Typography, Link } from '@material-ui/core';
@@ -16,8 +16,8 @@ defaults.global.maintainAspectRatio = false;
 const App = () => {
 	const [countryData, setCountryData] = useState({});
 	const [usaStateData, setUsaStateData] = useState({});
-	const [topConfirmedStateData, setTopConfirmedStateData] = useState({});
-	const [topDeathStateData, setTopDeathStateData] = useState({});
+	const [mostConfirmedStateData, setMostConfirmedStateData] = useState({});
+	const [mostDeathStateData, setMostDeathStateData] = useState({});
 
 	const [country, setCountry] = useState();
 	const [usaState, setUsaState] = useState();
@@ -37,11 +37,11 @@ const App = () => {
 			const usaStateData = await fetchUsaStateData();
 			setUsaStateData(usaStateData);
 
-			const topConfirmedStates = await fetchTopConfirmedStates();
-			setTopConfirmedStateData(topConfirmedStates);
+			const mostConfirmedStates = await fetchMostConfirmedStates();
+			setMostConfirmedStateData(mostConfirmedStates);
 
-			const topDeathStates = await fetchTopDeathStates();
-			setTopDeathStateData(topDeathStates);
+			const mostDeathStates = await fetchMostDeathStates();
+			setMostDeathStateData(mostDeathStates);
 		}
 		loadData();
 	}, []);
@@ -96,9 +96,9 @@ const App = () => {
 				{!usaStateData || !usaState ? null : <UsaStateChart data={usaStateData} usaState={usaState}/>}
 				<br/>
 				<Typography gutterBottom variant="h5" component="h2">Most Confirmed Cases</Typography>
-				{!topConfirmedStateData ? null : <StatesTable data={topConfirmedStateData}/>}
+				{!mostConfirmedStateData ? null : <UsaStatesTable data={mostConfirmedStateData}/>}
 		        <Typography gutterBottom variant="h5" component="h2">Most Deaths</Typography>
-				{!topDeathStateData ? null : <StatesTable data={topDeathStateData}/>}
+				{!mostDeathStateData ? null : <UsaStatesTable data={mostDeathStateData}/>}
 			</div>
 			<div className={styles.footer}>
 				<Typography variant="body1" component="h2">
