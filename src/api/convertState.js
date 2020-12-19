@@ -1,4 +1,4 @@
-const states = {
+const STATES = {
 	AL: 'Alabama',
 	AK: 'Alaska',
 	AR: 'Arkansas',
@@ -56,6 +56,6 @@ const states = {
 	WY: 'Wyoming'
 };
 
-const convertState = (stateAbbreviation) => (states[stateAbbreviation]);
+const convertState = (stateAbbreviation) => (STATES[stateAbbreviation]);
 
 export default convertState;
