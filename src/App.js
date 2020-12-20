@@ -90,7 +90,7 @@ const App = () => {
 				{!countryData ? null : <GlobalChart data={countryData} country={country}/>}
 				<Divider className={styles.divider}/>
 				<Box paddingTop={6}>
-			        <Typography variant="h4" component="h2" gutterBottom>{!usaState ? '' : convertState(usaState)}</Typography>
+			        <Typography variant="h3" pt={3} gutterBottom>{!usaState ? '' : convertState(usaState)}</Typography>
 				</Box>
 				<UsaStatePicker handleUsaStateChange={handleUsaStateChange}/>
 				{!usaStateData || !usaState ? null : <UsaStateChart data={usaStateData} usaState={usaState}/>}
