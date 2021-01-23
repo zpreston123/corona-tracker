@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUsaStateData } from '../../../api';
 import { Line } from 'react-chartjs-2';
+
+import { fetchUsaStateData } from '../../../api';
+
 import styles from './UsaStateChart.module.css';
 
 const UsaStateChart = ({ usaState }) => {
@@ -41,7 +43,7 @@ const UsaStateChart = ({ usaState }) => {
 		<div className={styles.container}>
 			{lineChart}
 		</div>
-	)
-}
+	);
+};
 
 export default UsaStateChart;

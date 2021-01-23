@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { fetchDailyData } from '../../../api';
 import { Line, Bar } from 'react-chartjs-2';
+
+import { fetchDailyData } from '../../../api';
+
 import styles from './GlobalChart.module.css';
 
 const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
@@ -40,7 +42,8 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 				            fill: true
 						}]
 					}}
-			/>) : null
+				/>
+			) : null
 	);
 
 	const barChart = (
@@ -71,7 +74,7 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 		<div className={styles.container}>
 			{country ? barChart : lineChart}
 		</div>
-	)
-}
+	);
+};
 
 export default GlobalChart;

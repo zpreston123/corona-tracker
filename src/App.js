@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import {
-	Cards, GlobalChart, UsaStateChart,
-	CountryPicker, UsaStatePicker, UsaStatesTable
-} from './components';
+
+import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
 import convertState from './api/convertState';
 import { defaults } from 'react-chartjs-2';
 import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createMuiTheme, Divider, CssBaseline, Typography, Link } from '@material-ui/core';
 import { Brightness2, Brightness5 } from '@material-ui/icons';
+
 import image from './images/image.png';
 
 defaults.global.maintainAspectRatio = false;
@@ -64,7 +63,7 @@ const App = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<CssBaseline/>
+			<CssBaseline />
 			<AppBar position="sticky" color="inherit">
 				<Toolbar>
 					<Grid justify="space-between" alignItems="center" container>
@@ -74,7 +73,7 @@ const App = () => {
 						<Grid item>
 							<Tooltip title={darkMode ? 'Toggle light theme' : 'Toggle dark theme'}>
 								<IconButton aria-label="delete" onClick={() => setDarkMode(!darkMode)}>
-									{darkMode ? <Brightness5/> : <Brightness2/>}
+									{darkMode ? <Brightness5 /> : <Brightness2 />}
 								</IconButton>
 							</Tooltip>
 						</Grid>
@@ -86,19 +85,19 @@ const App = () => {
 					<Typography variant="h3" pt={3} gutterBottom>{country}</Typography>
 				</Box>
 				{!countryData ? null : <Cards data={countryData}/>}
-				<CountryPicker handleCountryChange={handleCountryChange}/>
-				{!countryData ? null : <GlobalChart data={countryData} country={country}/>}
-				<Divider className={styles.divider}/>
+				<CountryPicker handleCountryChange={handleCountryChange} />
+				{!countryData ? null : <GlobalChart data={countryData} country={country} />}
+				<Divider className={styles.divider} />
 				<Box paddingTop={6}>
 			        <Typography variant="h3" pt={3} gutterBottom>{!usaState ? '' : convertState(usaState)}</Typography>
 				</Box>
-				<UsaStatePicker handleUsaStateChange={handleUsaStateChange}/>
-				{!usaStateData || !usaState ? null : <UsaStateChart data={usaStateData} usaState={usaState}/>}
+				<UsaStatePicker handleUsaStateChange={handleUsaStateChange} />
+				{!usaStateData || !usaState ? null : <UsaStateChart data={usaStateData} usaState={usaState} />}
 				<br/>
 				<Typography gutterBottom variant="h5" component="h2">Most Confirmed Cases</Typography>
-				{!mostConfirmedStateData ? null : <UsaStatesTable data={mostConfirmedStateData}/>}
+				{!mostConfirmedStateData ? null : <UsaStatesTable data={mostConfirmedStateData} />}
 		        <Typography gutterBottom variant="h5" component="h2">Most Deaths</Typography>
-				{!mostDeathStateData ? null : <UsaStatesTable data={mostDeathStateData}/>}
+				{!mostDeathStateData ? null : <UsaStatesTable data={mostDeathStateData} />}
 			</div>
 			<div className={styles.footer}>
 				<Typography variant="body1" component="h2">
@@ -108,6 +107,6 @@ const App = () => {
 			</div>
 		</ThemeProvider>
 	);
-}
+};
 
 export default App;

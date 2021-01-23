@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUsaStates } from '../../../api';
 import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
+
+import { fetchUsaStates } from '../../../api';
+
 import styles from './UsaStatePicker.module.css';
 
 const UsaStatePicker = ({ handleUsaStateChange }) => {
@@ -27,7 +29,7 @@ const UsaStatePicker = ({ handleUsaStateChange }) => {
 				{fetchedUsaStates.map(({ state, name }, i) => <option key={i} value={state}>{name}</option>)}
 			</NativeSelect>
 		</FormControl>
-	)
-}
+	);
+};
 
 export default UsaStatePicker;

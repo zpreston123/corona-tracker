@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, Typography, Grid } from '@material-ui/core';
 import CountUp from 'react-countup';
 import cx from 'classnames';
+
 import styles from './Card.module.css';
 
 const CardComponent = ({ className, cardTitle, value, lastUpdate, cardSubtitle }) => (

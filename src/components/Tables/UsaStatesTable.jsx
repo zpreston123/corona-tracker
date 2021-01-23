@@ -1,5 +1,6 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+
 import styles from './UsaStatesTable.module.css';
 
 const UsaStatesTable = ({ data }) => {
@@ -31,7 +32,7 @@ const UsaStatesTable = ({ data }) => {
 		<div className={styles.container}>
 			{table}
 		</div>
-	)
-}
+	);
+};
 
 export default UsaStatesTable;
