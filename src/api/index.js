@@ -9,16 +9,7 @@ export const fetchDailyData = async () => {
 	try {
 		const { data } = await axios.get(`${COVID_TRACKING_URL}/us/daily.json`);
 
-		return data
-			.map(({ positive, recovered, death, date }) => ({
-				confirmed: positive,
-				recovered,
-				deaths: death,
-				date: moment(date.toString()).format('l')
-			}))
-			.sort((item1, item2) =>
-				(new Date(item1.date) - new Date(item2.date))
-			);
+		return data.reverse().map(({ positive, recovered, death, dateChecked: date }) => ({ confirmed: positive, recovered, deaths: death, date }));
 	} catch (error) {
 		return error;
 	}
