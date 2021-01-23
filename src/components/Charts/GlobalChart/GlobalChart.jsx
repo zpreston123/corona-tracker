@@ -21,15 +21,15 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 			? (
 				<Line
 					data={{
-						labels: dailyData.map(({ date }) => date),
+						labels: dailyData.map(({ date }) => new Date(date).toLocaleDateString()),
 						datasets: [{
-							data: dailyData.map(({ confirmed }) => confirmed),
+							data: dailyData.map((data) => data.confirmed),
 							label: 'Infected',
 							borderColor: '#3333ff',
 							backgroundColor: 'rgba(0, 0, 255, 0.1)',
 							fill: true
 						}, {
-							data: dailyData.map(({ deaths }) => deaths),
+							data: dailyData.map((data) => data.deaths),
 							label: 'Deaths',
 							borderColor: 'red',
 							backgroundColor: 'rgba(255, 0, 0, 0.3)',
