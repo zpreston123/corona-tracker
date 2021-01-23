@@ -13,7 +13,7 @@ export const fetchDailyData = async () => {
 	} catch (error) {
 		return error;
 	}
-}
+};
 
 export const fetchCountryData = async (country) => {
 	const changeableUrl = !country ? MATHDRO_URL : `${MATHDRO_URL}/countries/${country}`;
@@ -25,9 +25,9 @@ export const fetchCountryData = async (country) => {
 	} catch (error) {
 		return error;
 	}
-}
+};
 
-export const fetchUsaStateData = async (state) => {
+export const fetchUsaStateData = await (state) => {
 	try {
 		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/${state.toLowerCase()}/daily.json`);
 
@@ -43,7 +43,7 @@ export const fetchUsaStateData = async (state) => {
 	} catch (error) {
 		return error;
 	}
-}
+};
 
 export const fetchMostConfirmedStates = async () => {
 	try {
@@ -56,7 +56,7 @@ export const fetchMostConfirmedStates = async () => {
 	} catch (error) {
 		return error;
 	}
-}
+};
 
 export const fetchMostDeathStates = async () => {
 	try {
@@ -69,7 +69,7 @@ export const fetchMostDeathStates = async () => {
 	} catch (error) {
 		return error;
 	}
-}
+};
 
 export const fetchCountries = async () => {
 	try {
@@ -79,7 +79,7 @@ export const fetchCountries = async () => {
 	} catch (error) {
 		return error;
 	}
-}
+};
 
 export const fetchUsaStates = async () => {
 	try {
@@ -89,4 +89,4 @@ export const fetchUsaStates = async () => {
 	} catch (error) {
 		return error;
 	}
-}
+};
