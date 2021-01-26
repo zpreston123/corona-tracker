@@ -27,7 +27,7 @@ export const fetchCountryData = async (country) => {
 	}
 };
 
-export const fetchUsaStateData = await (state) => {
+export const fetchUsaStateData = async (state) => {
 	try {
 		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/${state.toLowerCase()}/daily.json`);
 
