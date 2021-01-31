@@ -52,14 +52,14 @@ const App = () => {
 
 		setCountryData(countryData);
 		setCountry(country);
-	}
+	};
 
 	const handleUsaStateChange = async (state) => {
 		const usaStateData = await fetchUsaStateData(state);
 
 		setUsaStateData(usaStateData);
 		setUsaState(state);
-	}
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
