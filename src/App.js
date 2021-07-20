@@ -65,7 +65,7 @@ const App = () => {
 			<CssBaseline />
 			<AppBar position="sticky" color="inherit">
 				<Toolbar>
-					<Grid justify="space-between" alignItems="center" container>
+					<Grid justifyContent="space-between" alignItems="center" container>
 						<Grid item>
 							<img className={styles.image} src={image} alt="COVID-19"/>
 						</Grid>
