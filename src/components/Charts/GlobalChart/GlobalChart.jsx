@@ -59,12 +59,14 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 								'rgba(0, 255, 0, 0.5)',
 								'rgba(255, 0, 0, 0.5)'
 							],
-							data: [confirmed.value, recovered.value, deaths.value]
+							data: [confirmed, recovered, deaths]
 						}]
 					}}
 					options={{
-						legend: { display: false },
-						title: { display: true, text: `Current status in ${country}`}
+						plugins: {
+							legend: { display: false },
+							title: { display: true, text: `Current status in ${country}`}
+						}
 					}}
 				/>
 			) : null

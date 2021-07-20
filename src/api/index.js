@@ -1,45 +1,44 @@
 import axios from 'axios';
-import moment from 'moment';
-import convertState from './convertState';
 
-const MATHDRO_URL = 'https://covid19.mathdro.id/api';
-const COVID_TRACKING_URL = 'https://api.covidtracking.com/v1';
+const DISEASE_URL = 'https://disease.sh/v3/covid-19';
 
 export const fetchDailyData = async () => {
 	try {
-		const { data } = await axios.get(`${COVID_TRACKING_URL}/us/daily.json`);
+		const { data } = await axios.get(`${DISEASE_URL}/nyt/usa`);
 
-		return data.reverse().map(({ positive, recovered, death, dateChecked: date }) => ({ confirmed: positive, recovered, deaths: death, date }));
+		return data.map(({ date, cases, deaths }) => ({ date, confirmed: cases, deaths: deaths }));
 	} catch (error) {
 		return error;
 	}
 };
 
 export const fetchCountryData = async (country) => {
-	const changeableUrl = !country ? MATHDRO_URL : `${MATHDRO_URL}/countries/${country}`;
+	const changeableUrl = !country ? `${DISEASE_URL}/all` : `${DISEASE_URL}/countries/${country}`;
 
 	try {
-		const { data: { confirmed, recovered, deaths, lastUpdate } } = await axios.get(changeableUrl);
+		const { data: { cases, recovered, deaths, updated } } = await axios.get(changeableUrl);
 
-		return { confirmed, recovered, deaths, lastUpdate };
+		return { confirmed: cases, recovered, deaths, lastUpdate: updated };
 	} catch (error) {
 		return error;
 	}
 };
 
 export const fetchUsaStateData = async (state) => {
+	if (!state) {
+		return null;
+	}
+
 	try {
-		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/${state.toLowerCase()}/daily.json`);
+		const { data } = await axios.get(`${DISEASE_URL}/nyt/states/${state}?lastdays=all`);
 
 		return data
-			.map(({ state, positive, death, date }) => ({
+			.map(({ state, cases, deaths, date }) => ({
 				state,
-				confirmed: !positive ? 0 : positive,
-				deaths: !death ? 0 : death,
-				date: moment(date.toString()).format('l')
-			})).sort((item1, item2) =>
-				(new Date(item1.date) - new Date(item2.date))
-			);
+				confirmed: cases,
+				deaths: deaths,
+				date
+			}));
 	} catch (error) {
 		return error;
 	}
@@ -47,11 +46,10 @@ export const fetchUsaStateData = async (state) => {
 
 export const fetchMostConfirmedStates = async () => {
 	try {
-		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/current.json`);
+		const { data } = await axios.get(`${DISEASE_URL}/states?sort=cases`);
 
 		return data
-			.map(({ state, positive }) => ({ state: convertState(state), total: positive }))
-			.sort((item1, item2) => item2.total - item1.total)
+			.map(({ state, cases }) => ({ state, total: cases }))
 			.slice(0, 10);
 	} catch (error) {
 		return error;
@@ -60,11 +58,10 @@ export const fetchMostConfirmedStates = async () => {
 
 export const fetchMostDeathStates = async () => {
 	try {
-		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/current.json`);
+		const { data } = await axios.get(`${DISEASE_URL}/states?sort=deaths`);
 
 		return data
-			.map(({ state, death }) => ({ state: convertState(state), total: death }))
-			.sort((item1, item2) => item2.total - item1.total)
+			.map(({ state, deaths }) => ({ state, total: deaths }))
 			.slice(0, 10);
 	} catch (error) {
 		return error;
@@ -73,9 +70,12 @@ export const fetchMostDeathStates = async () => {
 
 export const fetchCountries = async () => {
 	try {
-		const { data: { countries } } = await axios.get(`${MATHDRO_URL}/countries`);
+		const { data } = await axios.get(`${DISEASE_URL}/countries?sort=country`);
 
-		return countries.map((country) => country.name);
+		return data
+			.filter(({ country }) => country !== 'USA')
+			.reverse()
+			.map(({ country }) => country);
 	} catch (error) {
 		return error;
 	}
@@ -83,9 +83,9 @@ export const fetchCountries = async () => {
 
 export const fetchUsaStates = async () => {
 	try {
-		const { data } = await axios.get(`${COVID_TRACKING_URL}/states/info.json`);
+		const { data } = await axios.get(`${DISEASE_URL}/nyt/states`);
 
-		return data.map((item) => ({ state: item.state, name: item.name }));
+		return data.map(({ state }) => state);
 	} catch (error) {
 		return error;
 	}

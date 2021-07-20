@@ -21,7 +21,7 @@ const UsaStateChart = ({ usaState }) => {
 			? (
 				<Line
 					data={{
-						labels: dailyData.map(({ date }) => date),
+						labels: dailyData.map(({ date }) => new Date(date).toLocaleDateString()),
 						datasets: [{
 							data: dailyData.map(({ confirmed }) => confirmed),
 							label: 'Infected',
@@ -36,7 +36,8 @@ const UsaStateChart = ({ usaState }) => {
 							fill: true
 						}]
 					}}
-			/>) : null
+				/>
+			) : null
 	);
 
 	return (

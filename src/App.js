@@ -3,14 +3,13 @@ import { useState, useEffect } from 'react';
 import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
-import convertState from './api/convertState';
 import { defaults } from 'react-chartjs-2';
 import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createMuiTheme, Divider, CssBaseline, Typography, Link } from '@material-ui/core';
 import { Brightness2, Brightness5 } from '@material-ui/icons';
 
 import image from './images/image.png';
 
-defaults.global.maintainAspectRatio = false;
+defaults.maintainAspectRatio = false;
 
 const App = () => {
 	const [countryData, setCountryData] = useState({});
@@ -89,7 +88,7 @@ const App = () => {
 				{!countryData ? null : <GlobalChart data={countryData} country={country} />}
 				<Divider className={styles.divider} />
 				<Box paddingTop={6}>
-			        <Typography variant="h3" pt={3} gutterBottom>{!usaState ? '' : convertState(usaState)}</Typography>
+			        <Typography variant="h3" pt={3} gutterBottom>{!usaState ? '' : usaState}</Typography>
 				</Box>
 				<UsaStatePicker handleUsaStateChange={handleUsaStateChange} />
 				{!usaStateData || !usaState ? null : <UsaStateChart data={usaStateData} usaState={usaState} />}
@@ -101,8 +100,8 @@ const App = () => {
 			</div>
 			<div className={styles.footer}>
 				<Typography variant="body1" component="h2">
-					US data sourced from <Link href="https://covidtracking.com/">COVID Tracking Project</Link>.<br/>
-					Global data sourced from <Link href="https://coronavirus.jhu.edu/">John Hopkins University CSSE</Link>.
+					US data sourced from <Link href="https://www.nytimes.com/interactive/2021/us/covid-cases.html">New York Times</Link> and <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.<br/>
+					Global data sourced from <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.
 				</Typography>
 			</div>
 		</ThemeProvider>

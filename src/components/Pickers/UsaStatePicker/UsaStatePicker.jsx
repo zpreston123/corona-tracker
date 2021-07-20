@@ -26,7 +26,7 @@ const UsaStatePicker = ({ handleUsaStateChange }) => {
 				}}
 			>
 				<option value="">Select an option</option>
-				{fetchedUsaStates.map(({ state, name }, i) => <option key={i} value={state}>{name}</option>)}
+				{fetchedUsaStates.map((state, i) => <option key={i} value={state}>{state}</option>)}
 			</NativeSelect>
 		</FormControl>
 	);
