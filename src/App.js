@@ -4,7 +4,7 @@ import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaSt
 import styles from './App.module.css';
 import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
 import { defaults } from 'react-chartjs-2';
-import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createMuiTheme, Divider, CssBaseline, Typography, Link } from '@material-ui/core';
+import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Link } from '@material-ui/core';
 import { Brightness2, Brightness5 } from '@material-ui/icons';
 
 import image from './images/image.png';
@@ -21,7 +21,7 @@ const App = () => {
 	const [usaState, setUsaState] = useState();
 
 	const [darkMode, setDarkMode] = useState(false);
-	const theme = createMuiTheme({
+	const theme = createTheme({
 		palette: {
 			type: darkMode ? 'dark' : 'light'
 		}
