@@ -101,7 +101,7 @@ const App = () => {
 			<div className={styles.footer}>
 				<Typography variant="body1" component="h2">
 					US data sourced from <Link href="https://www.nytimes.com/interactive/2021/us/covid-cases.html">New York Times</Link> and <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.<br/>
-					Global data sourced from <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.
+					Global data sourced from <Link href="https://coronavirus.jhu.edu/">John Hopkins University CSSE</Link> and <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.
 				</Typography>
 			</div>
 		</ThemeProvider>
