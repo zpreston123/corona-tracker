@@ -17,27 +17,24 @@ const UsaStateChart = ({ usaState }) => {
 	}, [usaState]);
 
 	const lineChart = (
-		dailyData.length
-			? (
-				<Line
-					data={{
-						labels: dailyData.map(({ date }) => new Date(date).toLocaleDateString()),
-						datasets: [{
-							data: dailyData.map(({ confirmed }) => confirmed),
-							label: 'Infected',
-							borderColor: '#3333ff',
-							backgroundColor: 'rgba(0, 0, 255, 0.1)',
-							fill: true
-						}, {
-							data: dailyData.map(({ deaths }) => deaths),
-							label: 'Deaths',
-							borderColor: 'red',
-							backgroundColor: 'rgba(255, 0, 0, 0.3)',
-							fill: true
-						}]
-					}}
-				/>
-			) : null
+		<Line
+			data={{
+				labels: dailyData.map(({ date }) => new Date(date).toLocaleDateString()),
+				datasets: [{
+					data: dailyData.map(({ confirmed }) => confirmed),
+					label: 'Infected',
+					borderColor: '#3333ff',
+					backgroundColor: 'rgba(0, 0, 255, 0.1)',
+					fill: true
+				}, {
+					data: dailyData.map(({ deaths }) => deaths),
+					label: 'Deaths',
+					borderColor: 'red',
+					backgroundColor: 'rgba(255, 0, 0, 0.3)',
+					fill: true
+				}]
+			}}
+		/>
 	);
 
 	return (

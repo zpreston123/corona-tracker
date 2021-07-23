@@ -31,20 +31,12 @@ export const fetchCountryData = async (country) => {
 };
 
 export const fetchUsaStateData = async (state) => {
-	if (!state) {
-		return null;
-	}
+	const changeableUrl = !state ? `${DISEASE_URL}/nyt/usa` : `${DISEASE_URL}/nyt/states/${state}?lastdays=all`;
 
 	try {
-		const { data } = await axios.get(`${DISEASE_URL}/nyt/states/${state}?lastdays=all`);
+		const { data } = await axios.get(changeableUrl);
 
-		return data
-			.map(({ state, cases, deaths, date }) => ({
-				state,
-				confirmed: cases,
-				deaths: deaths,
-				date
-			}));
+		return data.map(({ cases, deaths, date }) => ({ confirmed: cases, deaths, date }));
 	} catch (error) {
 		return error;
 	}
@@ -78,10 +70,7 @@ export const fetchCountries = async () => {
 	try {
 		const { data } = await axios.get(`${DISEASE_URL}/countries?sort=country`);
 
-		return data
-			.filter(({ country }) => country !== 'USA')
-			.reverse()
-			.map(({ country }) => country);
+		return data.reverse().map(({ country }) => country);
 	} catch (error) {
 		return error;
 	}

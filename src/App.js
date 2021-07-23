@@ -91,7 +91,7 @@ const App = () => {
 			        <Typography variant="h3" pt={3} gutterBottom>{!usaState ? '' : usaState}</Typography>
 				</Box>
 				<UsaStatePicker handleUsaStateChange={handleUsaStateChange} />
-				{!usaStateData || !usaState ? null : <UsaStateChart data={usaStateData} usaState={usaState} />}
+				{!usaStateData ? null : <UsaStateChart data={usaStateData} usaState={usaState} />}
 				<br/>
 				<Typography gutterBottom variant="h5" component="h2">Most Confirmed Cases</Typography>
 				{!mostConfirmedStateData ? null : <UsaStatesTable data={mostConfirmedStateData} />}
