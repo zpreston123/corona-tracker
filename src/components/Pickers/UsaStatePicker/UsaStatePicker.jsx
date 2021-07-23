@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
 
 import { fetchUsaStates } from '../../../api';
 
 import styles from './UsaStatePicker.module.css';
 
-const UsaStatePicker = ({ handleUsaStateChange }) => {
+const UsaStatePicker = React.memo(({ handleUsaStateChange }) => {
 	const [fetchedUsaStates, setFetchedUsaStates] = useState([]);
 
 	useEffect(() => {
@@ -30,6 +30,6 @@ const UsaStatePicker = ({ handleUsaStateChange }) => {
 			</NativeSelect>
 		</FormControl>
 	);
-};
+});
 
 export default UsaStatePicker;

@@ -1,9 +1,10 @@
+import React from 'react';
 import { Typography, Grid } from '@material-ui/core';
 import CardComponent from './Card/Card';
 
 import styles from './Cards.module.css';
 
-const Info = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
+const Info = React.memo(({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 	if (!confirmed) {
 	    return 'Loading...';
 	}
@@ -36,6 +37,6 @@ const Info = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
 			</Grid>
 		</div>
 	);
-};
+});
 
 export default Info;

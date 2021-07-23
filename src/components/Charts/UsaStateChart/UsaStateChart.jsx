@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { fetchUsaStateData } from '../../../api';
 
 import styles from './UsaStateChart.module.css';
 
-const UsaStateChart = ({ usaState }) => {
+const UsaStateChart = React.memo(({ usaState }) => {
 	const [dailyData, setDailyData] = useState([]);
 
 	useEffect(() => {
@@ -42,6 +42,6 @@ const UsaStateChart = ({ usaState }) => {
 			{lineChart}
 		</div>
 	);
-};
+});
 
 export default UsaStateChart;

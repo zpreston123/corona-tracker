@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 
 import { fetchDailyData } from '../../../api';
 
 import styles from './GlobalChart.module.css';
 
-const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
+const GlobalChart = React.memo(({ data: { confirmed, deaths, recovered }, country }) => {
 	const [dailyData, setDailyData] = useState([]);
 
 	useEffect(() => {
@@ -77,6 +77,6 @@ const GlobalChart = ({ data: { confirmed, deaths, recovered }, country }) => {
 			{country ? barChart : lineChart}
 		</div>
 	);
-};
+});
 
 export default GlobalChart;
