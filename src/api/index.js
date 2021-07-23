@@ -4,9 +4,15 @@ const DISEASE_URL = 'https://disease.sh/v3/covid-19';
 
 export const fetchDailyData = async () => {
 	try {
-		const { data } = await axios.get(`${DISEASE_URL}/nyt/usa`);
+		const { data: { cases, recovered, deaths } } = await axios.get(`${DISEASE_URL}/historical/all?lastdays=all`);
 
-		return data.map(({ date, cases, deaths }) => ({ date, confirmed: cases, deaths: deaths }));
+		return Object.keys(cases)
+				.map((date) => ({
+					date,
+					confirmed: cases[date],
+					recovered: recovered[date],
+					deaths: deaths[date]
+				}));
 	} catch (error) {
 		return error;
 	}

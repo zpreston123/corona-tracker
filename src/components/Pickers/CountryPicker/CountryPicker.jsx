@@ -25,7 +25,7 @@ const CountryPicker = ({ handleCountryChange }) => {
 		            id: 'country-native-label-placeholder'
 				}}
 			>
-				<option value="">United States</option>
+				<option value="">Select an option</option>
 				{fetchedCountries.map((country, i) => <option key={i} value={country}>{country}</option>)}
 			</NativeSelect>
 		</FormControl>
