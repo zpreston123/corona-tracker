@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 
-import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable } from './components';
+import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, ScrollTop } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
 import { defaults } from 'react-chartjs-2';
-import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Link } from '@material-ui/core';
-import { Brightness2, Brightness5 } from '@material-ui/icons';
+import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Link, Fab } from '@material-ui/core';
+import { Brightness2, Brightness5, KeyboardArrowUp } from '@material-ui/icons';
 
 import image from './images/image.png';
 
 defaults.maintainAspectRatio = false;
 
-const App = () => {
+const App = (props) => {
 	const [countryData, setCountryData] = useState({});
 	const [usaStateData, setUsaStateData] = useState({});
 	const [mostConfirmedStateData, setMostConfirmedStateData] = useState({});
@@ -79,6 +79,7 @@ const App = () => {
 					</Grid>
 				</Toolbar>
 			</AppBar>
+			<Toolbar id="back-to-top-anchor" />
 			<div className={styles.container}>
 				<Box paddingTop={6}>
 					<Typography variant="h3" pt={3} gutterBottom>{country}</Typography>
@@ -104,6 +105,11 @@ const App = () => {
 					Global data sourced from <Link href="https://coronavirus.jhu.edu/">John Hopkins University CSSE</Link> and <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.
 				</Typography>
 			</div>
+			<ScrollTop {...props}>
+				<Fab color="secondary" size="small" aria-label="scroll back to top">
+					<KeyboardArrowUp />
+				</Fab>
+			</ScrollTop>
 		</ThemeProvider>
 	);
 };
