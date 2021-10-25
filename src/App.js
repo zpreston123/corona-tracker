@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, ScrollTop, Navbar } from './components';
+import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, ScrollTop, Navbar, Footer } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
 import { defaults } from 'react-chartjs-2';
-import { Box, Toolbar, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Link, Fab } from '@material-ui/core';
+import { Box, Toolbar, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Fab } from '@material-ui/core';
 import { KeyboardArrowUp } from '@material-ui/icons';
 
 defaults.maintainAspectRatio = false;
@@ -82,12 +82,7 @@ const App = (props) => {
 		        <Typography gutterBottom variant="h5" component="h2">Most Deaths</Typography>
 				{!mostDeathStateData ? null : <UsaStatesTable data={mostDeathStateData} />}
 			</div>
-			<div className={styles.footer}>
-				<Typography variant="body1" component="h2">
-					US data sourced from <Link href="https://www.nytimes.com/interactive/2021/us/covid-cases.html">New York Times</Link> and <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.<br/>
-					Global data sourced from <Link href="https://coronavirus.jhu.edu/">John Hopkins University CSSE</Link> and <Link href="https://www.worldometers.info/coronavirus/">Worldometer</Link>.
-				</Typography>
-			</div>
+			<Footer />
 			<ScrollTop {...props}>
 				<Fab color="secondary" size="small" aria-label="scroll back to top">
 					<KeyboardArrowUp />

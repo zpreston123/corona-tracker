@@ -6,3 +6,4 @@ export { default as UsaStatePicker } from './Pickers/UsaStatePicker/UsaStatePick
 export { default as UsaStatesTable } from './Tables/UsaStatesTable';
 export { default as ScrollTop } from './ScrollTop/ScrollTop';
 export { default as Navbar } from './Navbar/Navbar';
+export { default as Footer } from './Footer/Footer';
