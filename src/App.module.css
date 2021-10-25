@@ -9,10 +9,6 @@ body {
 	flex-direction: column;
 }
 
-.image {
-	max-width: 160px;
-}
-
 .divider {
 	width: 90%;
 }

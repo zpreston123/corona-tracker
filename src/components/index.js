@@ -5,3 +5,4 @@ export { default as CountryPicker } from './Pickers/CountryPicker/CountryPicker'
 export { default as UsaStatePicker } from './Pickers/UsaStatePicker/UsaStatePicker';
 export { default as UsaStatesTable } from './Tables/UsaStatesTable';
 export { default as ScrollTop } from './ScrollTop/ScrollTop';
+export { default as Navbar } from './Navbar/Navbar';

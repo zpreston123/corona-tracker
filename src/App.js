@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 
-import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, ScrollTop } from './components';
+import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, ScrollTop, Navbar } from './components';
 import styles from './App.module.css';
 import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
 import { defaults } from 'react-chartjs-2';
-import { AppBar, Box, Toolbar, Tooltip, Grid, IconButton, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Link, Fab } from '@material-ui/core';
-import { Brightness2, Brightness5, KeyboardArrowUp } from '@material-ui/icons';
-
-import image from './images/image.png';
+import { Box, Toolbar, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Link, Fab } from '@material-ui/core';
+import { KeyboardArrowUp } from '@material-ui/icons';
 
 defaults.maintainAspectRatio = false;
 
@@ -20,10 +18,10 @@ const App = (props) => {
 	const [country, setCountry] = useState();
 	const [usaState, setUsaState] = useState();
 
-	const [darkMode, setDarkMode] = useState(false);
+	const [darkTheme, setDarkTheme] = useState(false);
 	const theme = createTheme({
 		palette: {
-			type: darkMode ? 'dark' : 'light'
+			type: darkTheme ? 'dark' : 'light'
 		}
 	});
 
@@ -63,22 +61,7 @@ const App = (props) => {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<AppBar position="sticky" color="inherit">
-				<Toolbar>
-					<Grid justifyContent="space-between" alignItems="center" container>
-						<Grid item>
-							<img className={styles.image} src={image} alt="COVID-19"/>
-						</Grid>
-						<Grid item>
-							<Tooltip title={darkMode ? 'Toggle light theme' : 'Toggle dark theme'}>
-								<IconButton aria-label="delete" onClick={() => setDarkMode(!darkMode)}>
-									{darkMode ? <Brightness5 /> : <Brightness2 />}
-								</IconButton>
-							</Tooltip>
-						</Grid>
-					</Grid>
-				</Toolbar>
-			</AppBar>
+			<Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
 			<Toolbar id="back-to-top-anchor" />
 			<div className={styles.container}>
 				<Box paddingTop={6}>
