@@ -4,6 +4,7 @@ export { default as UsaStateChart } from './Charts/UsaStateChart/UsaStateChart';
 export { default as CountryPicker } from './Pickers/CountryPicker/CountryPicker';
 export { default as UsaStatePicker } from './Pickers/UsaStatePicker/UsaStatePicker';
 export { default as UsaStatesTable } from './Tables/UsaStatesTable';
+export { default as UsaStateVaccineTable } from './Tables/UsaStateVaccineTable';
 export { default as ScrollTop } from './ScrollTop/ScrollTop';
 export { default as Navbar } from './Navbar/Navbar';
 export { default as Footer } from './Footer/Footer';

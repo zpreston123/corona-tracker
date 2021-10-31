@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-
-import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, ScrollTop, Navbar, Footer } from './components';
+import React, { useState, useEffect } from 'react';
+import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, UsaStateVaccineTable, ScrollTop, Navbar, Footer } from './components';
 import styles from './App.module.css';
-import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates } from './api';
+import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates, fetchUsaVaccineData } from './api';
 import { defaults } from 'react-chartjs-2';
 import { Box, Toolbar, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Fab } from '@material-ui/core';
 import { KeyboardArrowUp } from '@material-ui/icons';
@@ -14,6 +13,7 @@ const App = (props) => {
 	const [usaStateData, setUsaStateData] = useState({});
 	const [mostConfirmedStateData, setMostConfirmedStateData] = useState({});
 	const [mostDeathStateData, setMostDeathStateData] = useState({});
+	const [usaVaccineData, setUsaVaccineData] = useState({});
 
 	const [country, setCountry] = useState();
 	const [usaState, setUsaState] = useState();
@@ -53,8 +53,10 @@ const App = (props) => {
 
 	const handleUsaStateChange = async (state) => {
 		const usaStateData = await fetchUsaStateData(state);
+		const usaVaccineData = await fetchUsaVaccineData(state);
 
 		setUsaStateData(usaStateData);
+		setUsaVaccineData(usaVaccineData);
 		setUsaState(state);
 	};
 
@@ -76,7 +78,13 @@ const App = (props) => {
 				</Box>
 				<UsaStatePicker handleUsaStateChange={handleUsaStateChange} />
 				{!usaStateData ? null : <UsaStateChart data={usaStateData} usaState={usaState} />}
-				<br/>
+				{!usaState || !usaVaccineData ? null : (
+					<React.Fragment>
+						<Typography gutterBottom variant="h5" component="h2">Vaccinations (as of {usaVaccineData.date})</Typography>
+						<UsaStateVaccineTable data={usaVaccineData} />
+					</React.Fragment>
+				)}
+				<Divider className={styles.divider} />
 				<Typography gutterBottom variant="h5" component="h2">Most Confirmed Cases</Typography>
 				{!mostConfirmedStateData ? null : <UsaStatesTable data={mostConfirmedStateData} />}
 		        <Typography gutterBottom variant="h5" component="h2">Most Deaths</Typography>

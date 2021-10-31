@@ -42,6 +42,18 @@ export const fetchUsaStateData = async (state) => {
 	}
 };
 
+export const fetchUsaVaccineData = async (state) => {
+	if (!state) { return null; }
+
+	try {
+		const { data: { timeline } } = await axios.get(`${DISEASE_URL}/vaccine/coverage/states/${state}?fullData=true`);
+
+		return timeline.slice(-2)[0];
+	} catch (error) {
+		return error;
+	}
+};
+
 export const fetchMostConfirmedStates = async () => {
 	try {
 		const { data } = await axios.get(`${DISEASE_URL}/states?sort=cases`);
