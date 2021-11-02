@@ -84,7 +84,6 @@ const App = (props) => {
 						<UsaStateVaccineTable data={usaVaccineData} />
 					</React.Fragment>
 				)}
-				<Divider className={styles.divider} />
 				<Typography gutterBottom variant="h5" component="h2">Most Confirmed Cases</Typography>
 				{!mostConfirmedStateData ? null : <UsaStatesTable data={mostConfirmedStateData} />}
 		        <Typography gutterBottom variant="h5" component="h2">Most Deaths</Typography>
