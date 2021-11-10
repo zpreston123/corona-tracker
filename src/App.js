@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, UsaStateVaccineTable, ScrollTop, Navbar, Footer } from './components';
+import { Cards, GlobalChart, UsaStateChart, CountryPicker, UsaStatePicker, UsaStatesTable, UsaStateVaccineTable, VaccineCandidatesTable, ScrollTop, Navbar, Footer } from './components';
 import styles from './App.module.css';
-import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates, fetchUsaVaccineData } from './api';
+import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates, fetchUsaVaccineData, fetchVaccineCandidatesData } from './api';
 import { defaults } from 'react-chartjs-2';
 import { Box, Toolbar, ThemeProvider, createTheme, Divider, CssBaseline, Typography, Fab } from '@material-ui/core';
 import { KeyboardArrowUp } from '@material-ui/icons';
@@ -14,6 +14,7 @@ const App = (props) => {
 	const [mostConfirmedStateData, setMostConfirmedStateData] = useState({});
 	const [mostDeathStateData, setMostDeathStateData] = useState({});
 	const [usaVaccineData, setUsaVaccineData] = useState({});
+	const [vaccineCandidatesData, setVaccineCandidatesData] = useState({});
 
 	const [country, setCountry] = useState();
 	const [usaState, setUsaState] = useState();
@@ -38,6 +39,9 @@ const App = (props) => {
 
 			const mostDeathStates = await fetchMostDeathStates();
 			setMostDeathStateData(mostDeathStates);
+
+			const vaccineCandidatesData = await fetchVaccineCandidatesData();
+			setVaccineCandidatesData(vaccineCandidatesData);
 		}
 		loadData();
 	}, []);
@@ -84,6 +88,8 @@ const App = (props) => {
 						<UsaStateVaccineTable data={usaVaccineData} />
 					</React.Fragment>
 				)}
+				<Typography gutterBottom variant="h5" component="h2">Vaccine Candidates</Typography>
+				{!vaccineCandidatesData ? null : <VaccineCandidatesTable data={vaccineCandidatesData} />}
 				<Typography gutterBottom variant="h5" component="h2">Most Confirmed Cases</Typography>
 				{!mostConfirmedStateData ? null : <UsaStatesTable data={mostConfirmedStateData} />}
 		        <Typography gutterBottom variant="h5" component="h2">Most Deaths</Typography>

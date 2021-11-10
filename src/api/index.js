@@ -54,6 +54,18 @@ export const fetchUsaVaccineData = async (state) => {
 	}
 };
 
+export const fetchVaccineCandidatesData = async () => {
+	try {
+		const { data: { data } } = await axios.get(`${DISEASE_URL}/vaccine?fullData=true`);
+
+		return data
+			.filter(({ candidate }) => candidate !== 'No name announced')
+			.map(({ candidate, trialPhase, mechanism, sponsors, institutions }) => ({ candidate, trialPhase, mechanism, sponsors: sponsors.join('\r\n'), institutions: institutions.join('\r\n') }));
+	} catch (error) {
+		return error;
+	}
+};
+
 export const fetchMostConfirmedStates = async () => {
 	try {
 		const { data } = await axios.get(`${DISEASE_URL}/states?sort=cases`);
