@@ -1,9 +1,11 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-import styles from './UsaStateVaccineTable.module.css';
+import useStyles from './styles';
 
 const UsaStateVaccineTable = React.memo(({ data }) => {
+    const classes = useStyles();
+
     const table = (
         <TableContainer component={Paper}>
             <Table>
@@ -28,7 +30,7 @@ const UsaStateVaccineTable = React.memo(({ data }) => {
     );
 
     return (
-        <div className={styles.container}>
+        <div className={classes.container}>
             {table}
         </div>
     );

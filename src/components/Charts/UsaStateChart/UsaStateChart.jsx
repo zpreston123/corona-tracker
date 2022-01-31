@@ -5,7 +5,7 @@ import { Line } from 'react-chartjs-2';
 
 import { fetchUsaStateData } from '../../../api';
 
-import styles from './UsaStateChart.module.css';
+import useStyles from './styles';
 
 ChartJS.register(
 	CategoryScale,
@@ -20,6 +20,7 @@ ChartJS.register(
 
 const UsaStateChart = React.memo(({ usaState }) => {
 	const [dailyData, setDailyData] = useState([]);
+	const classes = useStyles();
 
 	useEffect(() => {
 		const fetchAPI = async () => {
@@ -51,7 +52,7 @@ const UsaStateChart = React.memo(({ usaState }) => {
 	);
 
 	return (
-		<div className={styles.container}>
+		<div className={classes.container}>
 			{lineChart}
 		</div>
 	);

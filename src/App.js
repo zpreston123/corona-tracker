@@ -10,7 +10,7 @@ import { defaults } from 'chart.js';
 
 import { fetchCountryData, fetchUsaStateData, fetchMostConfirmedStates, fetchMostDeathStates, fetchUsaVaccineData, fetchVaccineCandidatesData } from './api';
 
-import styles from './App.module.css';
+import useStyles from './styles';
 
 defaults.maintainAspectRatio = false;
 
@@ -26,6 +26,7 @@ const App = (props) => {
 	const [usaState, setUsaState] = useState();
 
     const [darkTheme, setDarkTheme] = useState(false);
+    const classes = useStyles();
     const theme = createTheme({
         palette: {
             mode: darkTheme ? 'dark' : 'light',
@@ -119,14 +120,14 @@ const App = (props) => {
             <CssBaseline />
             <Navbar darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
             <Toolbar id="back-to-top-anchor" />
-            <div className={styles.container}>
+            <div className={classes.container}>
                 <Box paddingTop={6}>
                     <Typography variant="h3" pt={3} gutterBottom>{country}</Typography>
                 </Box>
                 {!countryData ? null : <Cards data={countryData} darkTheme={darkTheme} setDarkTheme={setDarkTheme} />}
                 <CountryPicker handleCountryChange={handleCountryChange} />
                 {!countryData ? null : <GlobalChart data={countryData} country={country} />}
-                <Divider className={styles.divider} />
+                <Divider className={classes.divider} />
                 <Box paddingTop={6}>
                     <Typography variant="h3" pt={3} gutterBottom>{!usaState ? '' : usaState}</Typography>
                 </Box>

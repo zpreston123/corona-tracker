@@ -1,9 +1,11 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-import styles from './VaccineCandidatesTable.module.css';
+import useStyles from './styles';
 
 const VaccineCandidatesTable = React.memo(({ data }) => {
+    const classes = useStyles();
+
     const table = (
         data.length
           ? (
@@ -35,7 +37,7 @@ const VaccineCandidatesTable = React.memo(({ data }) => {
     );
 
     return (
-        <div className={styles.container}>
+        <div className={classes.container}>
             {table}
         </div>
     );

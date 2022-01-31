@@ -5,7 +5,7 @@ import { Line, Bar } from 'react-chartjs-2';
 
 import { fetchDailyData } from '../../../api';
 
-import styles from './GlobalChart.module.css';
+import useStyles from './styles';
 
 ChartJS.register(
 	CategoryScale,
@@ -21,6 +21,7 @@ ChartJS.register(
 
 const GlobalChart = React.memo(({ data: { confirmed, deaths, recovered }, country }) => {
 	const [dailyData, setDailyData] = useState([]);
+    const classes = useStyles();
 
 	useEffect(() => {
 		const fetchAPI = async () => {
@@ -87,7 +88,7 @@ const GlobalChart = React.memo(({ data: { confirmed, deaths, recovered }, countr
 	);
 
 	return (
-		<div className={styles.container}>
+		<div className={classes.container}>
 			{country ? barChart : lineChart}
 		</div>
 	);

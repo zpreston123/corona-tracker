@@ -5,13 +5,17 @@ import Brightness5 from '@mui/icons-material/Brightness5';
 
 import image from '../../images/image.png';
 
+import useStyles from './styles';
+
 const Navbar = ({ darkTheme, setDarkTheme }) => {
+    const classes = useStyles();
+
     return (
         <AppBar position="sticky" color="inherit">
             <Toolbar>
                 <Grid justifyContent="space-between" alignItems="center" container>
                     <Grid item>
-                        <img style={{ maxWidth: '160px' }} src={image} alt="COVID-19" />
+                        <img className={classes.image} src={image} alt="COVID-19" />
                     </Grid>
                     <Grid item>
                         <Tooltip title={darkTheme ? 'Toggle light theme' : 'Toggle dark theme'}>
