@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
+import { NativeSelect, FormControl, InputLabel } from '@mui/material';
 
 import { fetchCountries } from '../../../api';
 
@@ -18,7 +18,7 @@ const CountryPicker = React.memo(({ handleCountryChange }) => {
 
 	return (
 		<FormControl className={styles.formControl}>
-	        <InputLabel shrink htmlFor="country-native-label-placeholder">Select Country</InputLabel>
+	        <InputLabel shrink variant="standard" htmlFor="country-native-label-placeholder">Select Country</InputLabel>
 			<NativeSelect defaultValue="" onChange={(event) => handleCountryChange(event.target.value)}
 				inputProps={{
 		            name: 'country',

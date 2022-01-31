@@ -1,4 +1,5 @@
-import { Zoom, useScrollTrigger } from '@material-ui/core';
+import { Zoom, useScrollTrigger } from '@mui/material';
+
 import useStyles from './styles';
 
 const ScrollTop = (props) => {

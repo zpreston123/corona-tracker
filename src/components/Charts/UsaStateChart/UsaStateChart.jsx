@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
+
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
 import { fetchUsaStateData } from '../../../api';
 
 import styles from './UsaStateChart.module.css';
+
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend,
+	Filler
+);
 
 const UsaStateChart = React.memo(({ usaState }) => {
 	const [dailyData, setDailyData] = useState([]);

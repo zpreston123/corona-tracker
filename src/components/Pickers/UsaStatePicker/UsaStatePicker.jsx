@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NativeSelect, FormControl, InputLabel } from '@material-ui/core';
+import { NativeSelect, FormControl, InputLabel } from '@mui/material';
 
 import { fetchUsaStates } from '../../../api';
 
@@ -18,7 +18,7 @@ const UsaStatePicker = React.memo(({ handleUsaStateChange }) => {
 
 	return (
 		<FormControl className={styles.formControl}>
-	        <InputLabel shrink htmlFor="state-native-label-placeholder">Select State / Territory</InputLabel>
+	        <InputLabel shrink variant="standard" htmlFor="state-native-label-placeholder">Select State / Territory</InputLabel>
 			<NativeSelect defaultValue="" onChange={(event) => handleUsaStateChange(event.target.value)}
 				inputProps={{
 		            name: 'state',

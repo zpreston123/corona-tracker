@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
+
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
 
 import { fetchDailyData } from '../../../api';
 
 import styles from './GlobalChart.module.css';
+
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	BarElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend,
+	Filler
+);
 
 const GlobalChart = React.memo(({ data: { confirmed, deaths, recovered }, country }) => {
 	const [dailyData, setDailyData] = useState([]);

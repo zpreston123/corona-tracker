@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import CardComponent from './Card/Card';
 
 import styles from './Cards.module.css';
@@ -11,8 +11,8 @@ const Info = React.memo(({ data: { confirmed, recovered, deaths, lastUpdate } })
 
 	return (
 		<div className={styles.container}>
-	        <Typography gutterBottom variant="h4" component="h2">Global</Typography>
-			<Grid container spacing={3} justifyContent="center">
+	        <Typography variant="h4" component="h2">Global</Typography>
+			<Grid container justifyContent="center">
 				<CardComponent
 					className={styles.infected}
 					cardTitle="Infected"
